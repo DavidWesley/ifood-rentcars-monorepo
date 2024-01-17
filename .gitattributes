@@ -1,0 +1,31 @@
+# CONFIG TO FORCE USERS TO USE SAME LINE ENDINGS FOR PROJECT.
+
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+* text=auto
+
+#
+# The above will handle all files NOT found below
+# https://help.github.com/articles/dealing-with-line-endings/
+# https://github.com/Danimoth/gitattributes/blob/master/Web.gitattributes
+
+# These files are text and should be normalized (Convert crlf => lf)
+*.css text
+*.js eol=lf
+*.ts eol=lf
+*.jsx eol=lf
+*.tsx eol=lf
+*.json eol=lf
+*.html text
+*.txt text
+*.sh text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Fix syntax highlighting on GitHub to allow comments
+.vscode/*.json linguist-language=JSON-with-Comments
+
+# Apply override to all files in the directory
+*.md linguist-detectable
