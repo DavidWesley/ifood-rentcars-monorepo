@@ -1,0 +1,19 @@
+{
+  "cSpell.enableFiletypes": [
+    "!json",
+    "ts"
+  ],
+  "cSpell.words": [
+    "express",
+    "rentcars",
+    "tsup"
+  ],
+  "editor.formatOnSave": true,
+  "typescript.suggest.autoImports": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.experimental.useFlatConfig": true,
+}
