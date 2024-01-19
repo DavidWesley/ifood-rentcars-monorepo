@@ -10,6 +10,4 @@ const clientRouter = Router({
 clientRouter.get("/", clientController.listClients)
 clientRouter.post("/", clientController.createClient)
 
-// vehicleRouter.delete("/:plate", vehicleController.excludeVehicle) // Excluir um veículo pela sua placa
-
 export { clientRouter }

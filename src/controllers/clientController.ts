@@ -22,14 +22,12 @@ class ClientController {
 
     public async createClient(req: Request, res: Response, next: NextFunction) {
         try {
-            const client = await createClientService.execute(req.body);
-            res.status(StatusCodes.CREATED).send(client);
+            const client = await createClientService.execute(req.body)
+            res.status(StatusCodes.CREATED).send(client)
 
-            next();
-
+            next()
         } catch (err) {
-
-            next();
+            next()
         }
     }
 }

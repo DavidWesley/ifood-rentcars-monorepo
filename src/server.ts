@@ -2,8 +2,9 @@ import express from "express"
 import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
-import { vehicleRouter } from "./routes/vehicleRoutes.ts"
-import { clientRouter } from "./routes/clientRoutes.ts"
+
+import { clientRouter } from "@/routes/clientRoutes.ts"
+import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
 const server = express()
 const ALLOW_LIST_IPS = ["127.0.0.1", "::1"]
@@ -28,6 +29,5 @@ server.get("/check", async (_, res) => {
 //// ROUTES ////
 server.use("/vehicles", vehicleRouter)
 server.use("/clients", clientRouter)
-
 
 export { server }

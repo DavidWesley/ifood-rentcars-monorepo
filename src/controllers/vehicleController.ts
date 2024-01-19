@@ -1,7 +1,8 @@
-import { createVehicleService } from "@/services/CreateVehicleService.ts"
-import { listVehicleService } from "@/services/ListVehicleService.ts"
 import { NextFunction, Request, Response } from "express"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
+
+import { createVehicleService } from "@/services/CreateVehicleService.ts"
+import { listVehicleService } from "@/services/ListVehicleService.ts"
 
 class VehicleController {
     public async listVehicles(_: Request, res: Response, next: NextFunction) {
@@ -22,15 +23,23 @@ class VehicleController {
 
     public async createVehicle(req: Request, res: Response, next: NextFunction) {
         try {
-            const {plate, type, brand, model, manufacturingYear, color, mass, license, hourlyRentalRate } = req.body;
-            const vehicle = await createVehicleService.execute({plate, type, brand, model, manufacturingYear, color, mass, license, hourlyRentalRate});
-            res.status(StatusCodes.CREATED).send(vehicle);
+            const { plate, type, brand, model, manufacturingYear, color, mass, license, hourlyRentalRate } = req.body
+            const vehicle = await createVehicleService.execute({
+                plate,
+                type,
+                brand,
+                model,
+                manufacturingYear,
+                color,
+                mass,
+                license,
+                hourlyRentalRate,
+            })
+            res.status(StatusCodes.CREATED).send(vehicle)
 
-            next();
-
+            next()
         } catch (err) {
-
-            next();
+            next()
         }
     }
 
