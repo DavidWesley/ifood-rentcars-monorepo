@@ -1,4 +1,6 @@
-import { UUID } from "crypto"
+import { UUID } from "node:crypto"
+
+import { LicenseType } from "@/models/license.ts"
 
 export type VehicleType = "car" | "motorcycle"
 
@@ -11,7 +13,7 @@ export interface Vehicle {
     manufacturingYear?: number
     color?: string
     mass?: number
-    license: "A" | "B"
+    license: LicenseType
 
     hourlyRentalRate: number
     available?: boolean

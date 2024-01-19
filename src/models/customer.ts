@@ -1,8 +1,10 @@
-import { UUID } from "crypto"
+import { UUID } from "node:crypto"
+
+import { LicenseType } from "@/models/license.ts"
 
 export interface Customer {
-    id: UUID
+    id?: UUID
     name: string
     CPF: string
-    license: "A" | "B"
+    license: LicenseType
 }
