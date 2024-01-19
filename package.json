@@ -23,7 +23,8 @@
     "build": "tsup --config tsup.config.ts src",
     "lint": "eslint",
     "lint:fix": "eslint . --ext .js,.ts --fix",
-    "lint:all": "eslint src --ext .js,.ts --max-warnings=0 --fix"
+    "lint:all": "eslint src --ext .js,.ts --max-warnings=0 --fix",
+    "prepare": "husky install"
   },
   "author": {
     "name": "David Wesley",
@@ -45,6 +46,8 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
