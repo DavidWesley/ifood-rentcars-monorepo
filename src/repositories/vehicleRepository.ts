@@ -9,7 +9,7 @@ class VehicleRepository {
             license: "B",
             type: "car",
             hourlyRentalRate: 20,
-            available: true,
+            available: false,
             brand: "Audi",
             model: "A6",
             color: "white",

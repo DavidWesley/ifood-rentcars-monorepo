@@ -32,6 +32,22 @@ class VehicleController {
 
         }
     }
+
+    public async listAvailableVehicles(_: Request, res: Response, next: NextFunction) {
+        try {
+            const vehicles = (await listVehicleService.execute()).filter((v) => v.available === true)
+            res.status(StatusCodes.OK).send(vehicles)
+            next()
+        } catch (err) {
+            if (err instanceof Error) {
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+                    message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+                })
+            }
+
+            next()
+        }
+    }
 }
 
 export const vehicleController = new VehicleController()
