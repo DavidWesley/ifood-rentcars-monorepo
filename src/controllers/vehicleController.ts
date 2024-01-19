@@ -30,6 +30,7 @@ class VehicleController {
 
         } catch (err) {
 
+            next();
         }
     }
 

@@ -7,10 +7,10 @@ const vehicleRouter = Router({
     strict: true,
 })
 
-vehicleRouter.get("/", vehicleController.listVehicles) // Listagem de veículos
-vehicleRouter.post("/", vehicleController.createVehicle) // Cadastro de veículos
+vehicleRouter.get("/", vehicleController.listVehicles)
+vehicleRouter.get("/available", vehicleController.listAvailableVehicles)
+vehicleRouter.post("/", vehicleController.createVehicle)
 
-vehicleRouter.get("/available", vehicleController.listAvailableVehicles) // Listagem de veículos disponíveis pra alugar
 // vehicleRouter.delete("/:plate", vehicleController.excludeVehicle) // Excluir um veículo pela sua placa
 
 export { vehicleRouter }

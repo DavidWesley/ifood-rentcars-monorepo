@@ -1,4 +1,4 @@
-import { Vehicle } from "@/models/vehicle/vehicle.ts"
+import { Vehicle } from "@/models/vehicle.ts"
 import { randomUUID } from "crypto"
 
 class VehicleRepository {
@@ -37,11 +37,11 @@ class VehicleRepository {
         return Array.from(VehicleRepository.data)
     }
 
-    public async add(vehicle: Vehicle): Promise<Vehicle>{
-        vehicle.id = randomUUID();
-        VehicleRepository.data.push(vehicle);
+    public async add(vehicle: Vehicle): Promise<Vehicle> {
+        vehicle.id = randomUUID()
+        VehicleRepository.data.push(vehicle)
 
-        return vehicle;
+        return vehicle
     }
 }
 
