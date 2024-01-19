@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import process from "node:process"
+import { env } from "node:process"
 
 const envSchema = z.object({
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -8,6 +8,6 @@ const envSchema = z.object({
     HOST: z.string().ip().default("127.0.0.1"),
 })
 
-const ENV = envSchema.parse(process.env)
+const ENV = envSchema.parse(env)
 
 export { ENV }
