@@ -36,6 +36,13 @@ class VehicleRepository {
     public async list(): Promise<Vehicle[]> {
         return Array.from(VehicleRepository.data)
     }
+
+    public async add(vehicle: Vehicle): Promise<Vehicle>{
+        vehicle.id = randomUUID();
+        VehicleRepository.data.push(vehicle);
+
+        return vehicle;
+    }
 }
 
 export const vehicleRepository = new VehicleRepository()
