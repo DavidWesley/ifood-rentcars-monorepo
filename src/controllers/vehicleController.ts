@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
 
-import { createVehicleService } from "@/services/CreateVehicleService.ts"
-import { listVehicleService } from "@/services/ListVehicleService.ts"
+import { createVehicleService } from "@/services/vehicle/CreateVehicleService.ts"
+import { listVehicleService } from "@/services/vehicle/ListVehicleService.ts"
 
 class VehicleController {
     public async listVehicles(_: Request, res: Response, next: NextFunction) {

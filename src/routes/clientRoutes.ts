@@ -1,13 +1,13 @@
 import { Router } from "express"
 
-import { clientController } from "@/controllers/clientController.ts"
+import { customerController } from "@/controllers/customerController.ts"
 
-const clientRouter = Router({
+const customerRouter = Router({
     caseSensitive: true,
     strict: true,
 })
 
-clientRouter.get("/", clientController.listClients)
-clientRouter.post("/", clientController.createClient)
+customerRouter.get("/", customerController.listCustomers)
+customerRouter.post("/", customerController.createCustomer)
 
-export { clientRouter }
+export { customerRouter }
