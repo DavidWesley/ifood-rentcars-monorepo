@@ -4,6 +4,11 @@ import { LicenseType } from "@/models/license.ts"
 
 export type VehicleType = "car" | "motorcycle"
 
+export enum VehicleTypeEnum {
+    CAR = "car",
+    MOTORCYCLE = "motorcycle",
+}
+
 export interface Vehicle {
     id?: UUID
     plate: string
