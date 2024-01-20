@@ -5,16 +5,13 @@ import { Customer } from "@/models/customer.ts"
 class CustomerRepository {
     protected static data: Customer[] = [
         {
-            id: randomUUID(),
-            name: "Jurandir",
-            CPF: "123123123",
-            license: "A",
-        },
-        {
-            id: randomUUID(),
-            name: "Cacilda",
+            id: "d8a892f5-571d-4bd3-b44d-498441cce918",
+            name: "João da Silva",
+            email: "joao@example.com",
             CPF: "11111111111",
+            birthDate: new Date(2001, 2, 4, 12, 30),
             license: "A",
+            gender: "male",
         },
     ]
 
@@ -27,6 +24,11 @@ class CustomerRepository {
         CustomerRepository.data.push(customer)
 
         return customer
+    }
+
+    public async findById(id: NonNullable<Customer["id"]>): Promise<Customer | null> {
+        const customer = CustomerRepository.data.find((customer) => customer.id === id)
+        return customer ?? null
     }
 }
 
