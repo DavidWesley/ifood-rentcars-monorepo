@@ -3,7 +3,7 @@ import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
 
-import { clientRouter } from "@/routes/clientRoutes.ts"
+import { customerRouter } from "@/routes/customerRoutes.ts"
 import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
 const server = express()
@@ -28,6 +28,6 @@ server.get("/check", async (_, res) => {
 
 //// ROUTES ////
 server.use("/vehicles", vehicleRouter)
-server.use("/clients", clientRouter)
+server.use("/customers", customerRouter)
 
 export { server }
