@@ -30,6 +30,7 @@ class VehicleController {
 
             next()
         } catch (err) {
+            // TODO: Criar um middleware para lidar com tratamento de erros
             if (err instanceof ValidationError) {
                 res.status(err.statusCode).send({
                     code: err.errorCode,
@@ -42,13 +43,13 @@ class VehicleController {
                     message: err.message,
                     code: err.errorCode,
                 })
-            } else {
+            } else if (err instanceof Error) {
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-                    message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+                    message: err.message,
                 })
             }
 
-            next()
+            next(err)
         }
     }
 
