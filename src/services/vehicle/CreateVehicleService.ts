@@ -1,7 +1,5 @@
 import { randomUUID } from "node:crypto"
 
-import { StatusCodes } from "http-status-codes"
-
 import { ValidationError } from "@/errors/ValidationError.ts"
 import { VehicleAlreadyExistsError } from "@/errors/vehicle/VehicleAlreadyExistsError.ts"
 import { getLicenseTypeFromVehicleType } from "@/models/license.ts"
@@ -18,7 +16,7 @@ class CreateVehicleService {
 
         if (parsedProps.success === false) {
             const fieldValidationErrors = convertZodErrorIssuesToFieldsErrors(parsedProps.error)
-            throw new ValidationError("Erro de validação", StatusCodes.BAD_REQUEST, "VALIDATION_ERROR", fieldValidationErrors)
+            throw new ValidationError("Erro de validação na criação do veículo", fieldValidationErrors)
         }
 
         const normalizedPlate = parsedProps.data.plate.replace("-", "").toUpperCase()

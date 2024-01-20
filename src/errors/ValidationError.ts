@@ -1,3 +1,5 @@
+import { StatusCodes } from "http-status-codes"
+
 import { BaseError, BaseErrorProps } from "@/errors/BaseError.ts"
 
 export interface FieldValidationErrorProps {
@@ -12,8 +14,8 @@ export interface ValidationErrorProps extends BaseErrorProps {
 export class ValidationError extends BaseError {
     fieldValidationErrors: { field: string; message: string }[]
 
-    constructor(message: string, statusCode: number, errorCode: string, fieldValidationErrors: FieldValidationErrorProps[]) {
-        super(message, statusCode, errorCode)
+    constructor(message: string, fieldValidationErrors: FieldValidationErrorProps[]) {
+        super(message, StatusCodes.BAD_REQUEST, "VALIDATION_ERROR")
         this.name = "ValidationError"
         this.fieldValidationErrors = fieldValidationErrors
 
@@ -22,7 +24,7 @@ export class ValidationError extends BaseError {
 }
 
 // Exemplo de uso
-// const validationError = new ValidationError("Erro de validação", StatusCode.BAD_REQUEST, "VALIDATION_ERROR", [
+// const validationError = new ValidationError("Erro de validação", [
 //     { field: "username", message: "O nome de usuário é obrigatório." },
 //     { field: "email", message: "O formato do email é inválido." },
 // ])
