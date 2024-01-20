@@ -9,7 +9,7 @@ export abstract class BaseError extends Error implements BaseErrorProps {
     statusCode: number
     errorCode: string
 
-    constructor(message: string, statusCode: number, errorCode: string = "BASE_ERROR") {
+    constructor(message: string, statusCode: number = StatusCodes.BAD_REQUEST, errorCode: string = "BASE_ERROR") {
         super(message)
         this.name = "BaseError"
         this.statusCode = statusCode
