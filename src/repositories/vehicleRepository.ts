@@ -1,5 +1,6 @@
+import { randomUUID } from "node:crypto"
+
 import { Vehicle } from "@/models/vehicle.ts"
-import { randomUUID } from "crypto"
 
 class VehicleRepository {
     protected static data: Vehicle[] = [
