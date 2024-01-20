@@ -4,20 +4,18 @@ import { VehicleTypeEnum } from "@/models/vehicle.ts"
 
 // INFO: Schema de validação dos dados necessários para criar um veículo
 export const createVehicleBodySchema = z.object({
-    plate: z
-        .string()
-        .regex(/(^[A-Z]{3}-?\d{4}$)|(^[A-Z]{3}\d[A-Z]{1}\d{2}$)/, {
-            message: "Formato de placa inválido. Use o formato ABC-1234, ABC1234 ou ABC1D23",
-        }),
+    plate: z.string().regex(/(^[A-Z]{3}-?\d{4}$)|(^[A-Z]{3}\d[A-Z]{1}\d{2}$)/, {
+        message: "Formato de placa inválido. Use o formato ABC-1234, ABC1234 ou ABC1D23",
+    }),
     type: z.nativeEnum(VehicleTypeEnum, {
         errorMap(issue) {
             switch (issue.code) {
                 case "invalid_enum_value":
-                    return { message: "Selecione uma categoria de CNH." }
+                    return { message: "Selecione uma categoria válida de veículo." }
                 case "invalid_type":
                     return { message: "O tipo do dado informado é inválido." }
                 default:
-                    return { message: "O tipo de CNH informada ou é inválida ou ainda não é aceita pelo sistema." }
+                    return { message: "O tipo de veículo informada ou é inválido ou ainda não é aceita pelo sistema." }
             }
         },
     }),
@@ -29,10 +27,10 @@ export const createVehicleBodySchema = z.object({
         .min(2010, { message: "O ano de fabricação deve ser igual ou superior a 2010." })
         .max(new Date().getFullYear() + 1, { message: "O ano de fabricação deve ser inferior ou igual ao ano atual + 1." }),
     color: z.enum(["white", "black", "gray", "red", "blue", "yellow"], {
-        errorMap(issue) {
+        errorMap(issue, ctx) {
             switch (issue.code) {
                 case "invalid_enum_value":
-                    return { message: "Selecione uma cor." }
+                    return { message: `${ctx.data} não é uma cor válida.` }
                 case "invalid_type":
                     return { message: "O tipo do dado informado é inválido." }
                 default:
