@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express"
-import { ReasonPhrases, StatusCodes } from "http-status-codes"
+import { StatusCodes } from "http-status-codes"
 
-import { BaseError } from "@/errors/BaseError.ts"
-import { ValidationError } from "@/errors/ValidationError.ts"
 import { createVehicleService } from "@/services/vehicle/CreateVehicleService.ts"
 import { listVehicleService } from "@/services/vehicle/ListVehicleService.ts"
 
@@ -13,13 +11,7 @@ class VehicleController {
             res.status(StatusCodes.OK).send(vehicles)
             next()
         } catch (err) {
-            if (err instanceof Error) {
-                res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-                    message: ReasonPhrases.INTERNAL_SERVER_ERROR,
-                })
-            }
-
-            next()
+            next(err)
         }
     }
 
@@ -27,28 +19,8 @@ class VehicleController {
         try {
             const vehicle = await createVehicleService.execute(req.body)
             res.status(StatusCodes.CREATED).send(vehicle)
-
             next()
         } catch (err) {
-            // TODO: Criar um middleware para lidar com tratamento de erros
-            if (err instanceof ValidationError) {
-                res.status(err.statusCode).send({
-                    code: err.errorCode,
-                    message: err.message,
-                    errors: err.fieldValidationErrors,
-                })
-            } else if (err instanceof BaseError) {
-                res.status(err.statusCode).send({
-                    name: err.name,
-                    message: err.message,
-                    code: err.errorCode,
-                })
-            } else if (err instanceof Error) {
-                res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-                    message: err.message,
-                })
-            }
-
             next(err)
         }
     }
@@ -59,13 +31,7 @@ class VehicleController {
             res.status(StatusCodes.OK).send(vehicles)
             next()
         } catch (err) {
-            if (err instanceof Error) {
-                res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-                    message: ReasonPhrases.INTERNAL_SERVER_ERROR,
-                })
-            }
-
-            next()
+            next(err)
         }
     }
 }
