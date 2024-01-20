@@ -44,6 +44,12 @@ class VehicleRepository {
 
         return vehicle
     }
+
+    public async findByPlate(plate: string): Promise<Vehicle | null> {
+        const vehicle = VehicleRepository.data.find((vehicle) => vehicle.plate === plate)
+
+        return vehicle ?? null
+    }
 }
 
 export const vehicleRepository = new VehicleRepository()
