@@ -1,10 +1,47 @@
+import { randomUUID } from "node:crypto"
+
+import { StatusCodes } from "http-status-codes"
+
+import { ValidationError } from "@/errors/ValidationError.ts"
+import { VehicleAlreadyExistsError } from "@/errors/vehicle/VehicleAlreadyExistsError.ts"
+import { getLicenseTypeFromVehicleType } from "@/models/license.ts"
 import { Vehicle } from "@/models/vehicle.ts"
 import { vehicleRepository } from "@/repositories/vehicleRepository.ts"
+import { createVehicleBodySchema } from "@/schemas/vehicleSchemas.ts"
+import { convertZodErrorIssuesToFieldsErrors } from "@/utils/convertZodErrorsToFieldsErrors.ts"
+
+interface CreateVehicleProps extends Omit<Vehicle, "id" | "available" | "popularity"> {}
 
 class CreateVehicleService {
-    public async execute(props: Vehicle) {
-        const vehicle: Vehicle = await vehicleRepository.add(props)
-        return vehicle
+    public async execute(props: CreateVehicleProps): Promise<Vehicle> {
+        const parsedProps = createVehicleBodySchema.safeParse(props)
+
+        if (parsedProps.success === false) {
+            const fieldValidationErrors = convertZodErrorIssuesToFieldsErrors(parsedProps.error)
+            throw new ValidationError("Erro de validação", StatusCodes.BAD_REQUEST, "VALIDATION_ERROR", fieldValidationErrors)
+        }
+
+        const vehicleAlreadyExists = await vehicleRepository.findByPlate(parsedProps.data.plate)
+        if (vehicleAlreadyExists !== null) {
+            throw new VehicleAlreadyExistsError(vehicleAlreadyExists.plate)
+        }
+
+        const vehicle: Vehicle = {
+            id: randomUUID(),
+            plate: parsedProps.data.plate,
+            type: parsedProps.data.type,
+            hourlyRentalRate: parsedProps.data.hourlyRate,
+            brand: parsedProps.data.brand,
+            model: parsedProps.data.model,
+            manufacturingYear: parsedProps.data.manufacturingYear,
+            color: parsedProps.data.color,
+            mass: parsedProps.data.mass,
+            available: true,
+            popularity: 0,
+            license: getLicenseTypeFromVehicleType(parsedProps.data.type, parsedProps.data.mass),
+        }
+
+        return await vehicleRepository.add(vehicle)
     }
 }
 
