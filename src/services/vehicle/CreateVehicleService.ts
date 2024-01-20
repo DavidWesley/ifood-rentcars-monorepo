@@ -10,7 +10,7 @@ import { vehicleRepository } from "@/repositories/vehicleRepository.ts"
 import { createVehicleBodySchema } from "@/schemas/vehicleSchemas.ts"
 import { convertZodErrorIssuesToFieldsErrors } from "@/utils/convertZodErrorsToFieldsErrors.ts"
 
-interface CreateVehicleProps extends Omit<Vehicle, "id" | "available" | "popularity"> {}
+interface CreateVehicleProps extends Omit<Vehicle, "id" | "available" | "popularity" | "license"> {}
 
 class CreateVehicleService {
     public async execute(props: CreateVehicleProps): Promise<Vehicle> {
@@ -21,14 +21,15 @@ class CreateVehicleService {
             throw new ValidationError("Erro de validação", StatusCodes.BAD_REQUEST, "VALIDATION_ERROR", fieldValidationErrors)
         }
 
-        const vehicleAlreadyExists = await vehicleRepository.findByPlate(parsedProps.data.plate)
+        const normalizedPlate = parsedProps.data.plate.replace("-", "").toUpperCase()
+        const vehicleAlreadyExists = await vehicleRepository.findByPlate(normalizedPlate)
         if (vehicleAlreadyExists !== null) {
             throw new VehicleAlreadyExistsError(vehicleAlreadyExists.plate)
         }
 
         const vehicle: Vehicle = {
             id: randomUUID(),
-            plate: parsedProps.data.plate,
+            plate: normalizedPlate,
             type: parsedProps.data.type,
             hourlyRentalRate: parsedProps.data.hourlyRate,
             brand: parsedProps.data.brand,
