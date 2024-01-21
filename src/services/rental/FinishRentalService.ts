@@ -1,26 +1,37 @@
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
+import { RentalAlreadyFinishedError } from "@/errors/rental/RentalAlreadyFinishedError.ts"
 import { RentalNotFoundError } from "@/errors/rental/RentalNotFoundError.ts"
 import { Customer } from "@/models/customer.ts"
 import { RentalStatus } from "@/models/rental.ts"
 import { customerRepository } from "@/repositories/customerRepository.ts"
 import { rentalRepository } from "@/repositories/rentalRepository.ts"
+import { vehicleRepository } from "@/repositories/vehicleRepository.ts"
 
 class FinishRentalService {
-    public async execute(customerCPF: NonNullable<Customer["CPF"]>) {
-        const customer = await customerRepository.findByCPF(customerCPF)
+    public async execute(cpf: Customer["CPF"]) {
+        const customer = await customerRepository.findByCPF(cpf)
         if (customer === null) {
-            throw new CustomerNotFoundError(customerCPF)
+            throw new CustomerNotFoundError(cpf)
         }
-        const {id : customerID} = customer;
-        const rental = await rentalRepository.findBycustomerID(customerID!)
+
+        let rental = await rentalRepository.findLastFromCustomerId(customer.id)
         if (rental === null) {
-            throw new RentalNotFoundError(customerID!)
+            throw new RentalNotFoundError("")
         }
 
-        rental.endDate = new Date()
-        rental.status = RentalStatus.Completed
+        if (rental.status === RentalStatus.Completed || rental.status === RentalStatus.Canceled) {
+            throw new RentalAlreadyFinishedError("O último aluguel realizado pelo cliente já possui o status finalizado ou cancelado.")
+        }
 
-        rentalRepository.updateOne(rental)
+        const today = new Date()
+        rental = await rentalRepository.updateOne(rental.id, { status: RentalStatus.Completed, returnDate: today })
+
+        vehicleRepository.updateOne(rental?.vehicleId!, { available: true })
+
+        // TODO: CalculateTotalAmount Service and update invoice data
+        // const invoice = calculateTotalAmountService.execute(rental)
+        // invoiceRepository.updateOne(invoice)
+
         return rental
     }
 }

@@ -52,3 +52,7 @@ export const createRentalBodySchema = z
             })
         }
     })
+
+export const finishRentalBodySchema = z.object({
+    cpf: customerCPFSchema,
+})

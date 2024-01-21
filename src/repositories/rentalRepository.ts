@@ -1,5 +1,7 @@
-import { Rental, RentalStatus } from "@/models/rental.ts"
 import { randomUUID } from "node:crypto"
+
+import { Customer } from "@/models/customer.ts"
+import { Rental, RentalStatus } from "@/models/rental.ts"
 
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
@@ -46,32 +48,40 @@ class RentalRepository {
         return Array.from(RentalRepository.data)
     }
 
-    public async findById(id: NonNullable<Rental["id"]>): Promise<Rental | null> {
+    public async findById(id: NonNullable<Rental["id"]>): Promise<Required<Rental> | null> {
         const rental = RentalRepository.data.find((rental) => rental.id === id)
         return rental ?? null
     }
 
-    public async findBycustomerID(customerId: NonNullable<Rental["customerId"]>): Promise<Rental | null> {
+    public async findAllByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental> | null> {
         const rental = RentalRepository.data.find((rental) => rental.customerId === customerId)
         return rental ?? null
     }
 
-    public async updateOne(rental: Rental) {
-        const { id } = rental
+    public async updateOne(id: NonNullable<Rental["id"]>, props: Omit<Partial<Rental>, "id">): Promise<Required<Rental> | null> {
         const rentalIndex = RentalRepository.data.findIndex((rental) => rental.id === id)
         if (rentalIndex === -1) return null
 
-        RentalRepository.data[rentalIndex] = rental
+        RentalRepository.data[rentalIndex] = {
+            ...RentalRepository.data[rentalIndex]!,
+            ...props,
+        }
 
-        const newRental = RentalRepository.data[rentalIndex]!
+        const updatedRental = RentalRepository.data[rentalIndex]!
 
-        return newRental
+        return updatedRental
     }
+
     public async create(props: Omit<Rental, "id">): Promise<Required<Rental>> {
         // TODO: Melhorar registro de aluguel no banco
         const id = randomUUID()
         const size = await RentalRepository.data.push({ id, ...props })
         return RentalRepository.data[size - 1]!
+    }
+
+    public async findLastFromCustomerId(customerId: NonNullable<Customer["id"]>): Promise<Required<Rental> | null> {
+        const rental = RentalRepository.data.findLast((rental) => rental.customerId === customerId)
+        return rental ?? null
     }
 }
 
