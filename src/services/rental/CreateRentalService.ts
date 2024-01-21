@@ -1,5 +1,6 @@
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
 import { InvalidLicenseTypeError } from "@/errors/license/InvalidLicenseTypeError.ts"
+import { RentalAlreadyInProgressError } from "@/errors/rental/RentalAlreadyInProgress"
 import { RentalDateError } from "@/errors/rental/RentalDateError.ts"
 import { RentalDateMinError } from "@/errors/rental/RentalDateMinError.ts"
 import { VehicleNotFoundError } from "@/errors/vehicle/VehicleNotFoundError.ts"
@@ -28,6 +29,12 @@ class CreateRentalService {
             throw new VehicleUnavailableError("Veículo indisponível.")
         }
 
+        const existingRental = await rentalRepository.findInProgressByCustomerId(customer.id!);
+        if (existingRental !== null) {
+            throw new RentalAlreadyInProgressError(cpf);
+        }
+
+
         if (LicenseValidationService.validateForVehicleType(customer.license, vehicle.type) === false) {
             throw new InvalidLicenseTypeError(`A CNH do usuário não é válida para alugar um veículo do tipo ${vehicle.type}.`)
         }
@@ -41,8 +48,6 @@ class CreateRentalService {
         if (diff < 24){
             throw new RentalDateMinError(diff);
         }
-
-        // Verificar se o cliente já não tem um aluguel feito
 
         vehicleRepository.updateOne(vehicle.id!, { available: false, popularity: vehicle.popularity + 1 })
 
