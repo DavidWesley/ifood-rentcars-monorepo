@@ -19,8 +19,8 @@ class RentalController {
 
     public async finishRental(req: Request, res: Response, next: NextFunction) {
         try {
-            const { customerId, rentalId } = req.body
-            const newRental = await finishRentalService.execute(customerId, rentalId)
+            const { customerCPF} = req.body
+            const newRental = await finishRentalService.execute(customerCPF)
             res.status(StatusCodes.OK).send(newRental)
         } catch (err) {
             next(err)

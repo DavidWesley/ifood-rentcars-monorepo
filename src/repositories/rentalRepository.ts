@@ -51,6 +51,11 @@ class RentalRepository {
         return rental ?? null
     }
 
+    public async findBycustomerID(customerId: NonNullable<Rental["customerId"]>): Promise<Rental | null> {
+        const rental = RentalRepository.data.find((rental) => rental.customerId === customerId)
+        return rental ?? null
+    }
+
     public async updateOne(rental: Rental) {
         const { id } = rental
         const rentalIndex = RentalRepository.data.findIndex((rental) => rental.id === id)
