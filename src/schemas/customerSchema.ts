@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-import { validateCpf } from "@/libs/validators.ts"
 import { Customer } from "@/models/customer.ts"
+import { customerCPFSchema } from "@/schemas/commons.ts"
 import { TimeUnits } from "@/utils/timeUnits.ts"
 
 export type SettableCustomerProperties = Omit<Customer, "id">
@@ -25,8 +25,5 @@ export const createCustomerBodySchema = z.object<SettableCustomerPropertiesObjec
         },
         { message: "O cliente deve ter pelo menos 18 anos." }
     ),
-    CPF: z
-        .string()
-        .transform((value) => value.replace(/\D/g, ""))
-        .refine((value) => validateCpf(value) === true, { message: "CPF inválido." }),
+    CPF: customerCPFSchema,
 })
