@@ -1,5 +1,7 @@
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
 import { InvalidLicenseTypeError } from "@/errors/license/InvalidLicenseTypeError.ts"
+import { RentalDateError } from "@/errors/rental/RentalDateError.ts"
+import { RentalDateMinError } from "@/errors/rental/RentalDateMinError.ts"
 import { VehicleNotFoundError } from "@/errors/vehicle/VehicleNotFoundError.ts"
 import { VehicleUnavailableError } from "@/errors/vehicle/VehicleUnavailableError.ts"
 import { Customer } from "@/models/customer.ts"
@@ -30,11 +32,20 @@ class CreateRentalService {
             throw new InvalidLicenseTypeError(`A CNH do usuário não é válida para alugar um veículo do tipo ${vehicle.type}.`)
         }
 
-        // TODO: Validar datas de início e fim do aluguel, incluindo a diferença mínima entre elas como sendo de 24h.
+        if (endDate <= startDate){
+            throw new RentalDateError(startDate,endDate);
+        }
+
+        const diff = Math.abs(endDate.getTime() - startDate.getTime()) / 3600000;
+
+        if (diff < 24){
+            throw new RentalDateMinError(diff);
+        }
+
+        // Verificar se o cliente já não tem um aluguel feito
 
         vehicleRepository.updateOne(vehicle.id!, { available: false, popularity: vehicle.popularity + 1 })
 
-        // TODO: Criação de aluguel
         const rental = new Rental(customer.id!, vehicle.id!, startDate, endDate, RentalStatus.InProgress)
         await rentalRepository.create(rental)
 
