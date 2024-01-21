@@ -1,4 +1,5 @@
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
+import { ActiveRentalNotFoundError } from "@/errors/rental/ActiveRentalNotFoundError.ts"
 import { RentalAlreadyFinishedError } from "@/errors/rental/RentalAlreadyFinishedError.ts"
 import { RentalNotFoundError } from "@/errors/rental/RentalNotFoundError.ts"
 import { Customer } from "@/models/customer.ts"
@@ -17,6 +18,12 @@ class FinishRentalService {
         let rental = await rentalRepository.findLastFromCustomerId(customer.id)
         if (rental === null) {
             throw new RentalNotFoundError("")
+        }
+
+        const {id : customerID} = customer;
+        const activeRental = await rentalRepository.findActiveRentalByCustomerID(customerID!)
+        if (rental === null) {
+            throw new ActiveRentalNotFoundError(customerID!)
         }
 
         if (rental.status === RentalStatus.Completed || rental.status === RentalStatus.Canceled) {

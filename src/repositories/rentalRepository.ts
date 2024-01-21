@@ -34,6 +34,26 @@ class RentalRepository {
         },
         {
             createdAt: today,
+            id: "b3d9bb38-5565-451d-b77f-695bef894bd5",
+            customerId: "cdab164a-fa1c-48f7-80f2-782c67d12547",
+            vehicleId: "2f171600-a65d-4430-8fc8-955a61fc70fb",
+            status: RentalStatus.InProgress,
+            startDate: yesterday,
+            endDate: nextMonth,
+            returnDate: today,
+        },
+        {
+            createdAt: today,
+            id: "bbad7843-b87s-4633-bb89-cb2710332a94",
+            customerId: "d9a3af3e-1372-4d2e-8ab5-cb8602738195",
+            vehicleId: "1f745b15-0a69-4df8-a120-64ab4a3de34c",
+            status: RentalStatus.Canceled,
+            startDate: today,
+            endDate: nextMonth,
+            returnDate: null,
+        },
+        {
+            createdAt: today,
             id: "bbad7843-b61a-4633-bb89-cb2710332a94",
             customerId: "d9a3af3e-1372-4d2e-8ab5-cb8602738195",
             vehicleId: "1f745b15-0a69-4df8-a120-64ab4a3de34c",
@@ -50,6 +70,11 @@ class RentalRepository {
 
     public async findById(id: NonNullable<Rental["id"]>): Promise<Required<Rental> | null> {
         const rental = RentalRepository.data.find((rental) => rental.id === id)
+        return rental ?? null
+    }
+
+    public async findActiveRentalByCustomerID(customerId: NonNullable<Rental["customerId"]>): Promise<Rental | null> {
+        const rental = RentalRepository.data.find((rental) => rental.customerId === customerId && rental.status === RentalStatus.InProgress || RentalStatus.Confirmed)
         return rental ?? null
     }
 
