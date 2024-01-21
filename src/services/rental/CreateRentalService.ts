@@ -11,10 +11,10 @@ import { vehicleRepository } from "@/repositories/vehicleRepository.ts"
 import { LicenseValidationService } from "@/services/license/LicenseValidationService.ts"
 
 class CreateRentalService {
-    public async execute(customerCPF: NonNullable<Customer["CPF"]>, plate: Vehicle["plate"], startDate: Date, endDate: Date): Promise<Rental> {
-        const customer = await customerRepository.findByCPF(customerCPF)
+    public async execute(cpf: NonNullable<Customer["CPF"]>, plate: Vehicle["plate"], startDate: Date, endDate: Date): Promise<Required<Rental>> {
+        const customer = await customerRepository.findByCPF(cpf)
         if (customer === null) {
-            throw new CustomerNotFoundError(customerCPF)
+            throw new CustomerNotFoundError(cpf)
         }
 
         const vehicle = await vehicleRepository.findByPlate(plate)
