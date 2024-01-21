@@ -8,4 +8,6 @@ const rentalRouter = Router({
 
 rentalRouter.get("/", rentalController.listRentals)
 
+rentalRouter.post("/", rentalController.createRental)
+
 export { rentalRouter }
