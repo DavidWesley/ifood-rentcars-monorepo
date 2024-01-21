@@ -1,41 +1,47 @@
-import { ENV } from "@/libs/env.ts";
-import { NextFunction, Request, Response } from "express";
+import { ENV } from "@/libs/env.ts"
+import { NextFunction, Request, Response } from "express"
 
 export class LogMiddleware {
-  
-    static DATE_FORMATTER = Intl.DateTimeFormat('pt-BR', {
-      dateStyle: 'short',
-      timeStyle: 'short'
-    });
+    private static DATE_FORMATTER = new Intl.DateTimeFormat("pt-BR", {
+        dateStyle: "short",
+        timeStyle: "medium",
+        timeZone: "America/Sao_Paulo",
+    })
+
+    private static JSON_FORMATTER = (value: object) => {
+        return JSON.stringify(value, null, 2)
+    }
 
     public static execute(req: Request, _: Response, next: NextFunction) {
-      function isEmpty(object: Record<string, string | Date | number>) {
-        return Object.keys(object).length === 0;
-      }
-  
-      const date = LogMiddleware.DATE_FORMATTER.format(new Date());
-      const env = ENV.NODE_ENV;
-  
-      let params = isEmpty(req.params) ? '' : `\nParams: ${JSON.stringify(req.params, null, 2)}`;
-      let body = isEmpty(req.body) ? '' : `\nBody: ${JSON.stringify(req.body, null, 2)}`;
-  
+        const isEmpty = (object: Record<string, any>) => {
+            if (!object) return true
+            return Object.keys(object).length === 0
+        }
 
-      if(env === "development"){
-        console.log(`
-Request Log: ${date}
-Info: ${req.method} ${req.originalUrl}${params}${body}
-`);   
-      }
+        const now = new Date()
+        const dateTimeString = LogMiddleware.DATE_FORMATTER.format(now)
 
-      if(env === "production"){
-        console.log(`
-[${date}] [${req.method} ${req.originalUrl}]
-        `)
-      } 
-    
-    next();
-  }
+        const body = isEmpty(req.body) ? "" : `Body: ${LogMiddleware.JSON_FORMATTER(req.body)}`
+        const params = isEmpty(req.params) ? "" : `Params: ${LogMiddleware.JSON_FORMATTER(req.params)}`
+        const query = isEmpty(req.query) ? "" : `Query: ${LogMiddleware.JSON_FORMATTER(req.query)}`
+
+        const requestInfo = [params, query, body].filter(Boolean).join("\n")
+
+        switch (ENV.NODE_ENV) {
+            case "production":
+                console.log(`[LOG] ${dateTimeString} ${req.method} ${req.originalUrl}`)
+                break
+            case "development":
+                console.group(`[LOG] ${dateTimeString} ${req.method} ${req.url}`)
+                if (requestInfo !== "") console.log(requestInfo)
+                console.groupEnd()
+                break
+            case "test":
+                break
+            default:
+                break
+        }
+
+        next()
+    }
 }
-
-
-
