@@ -17,14 +17,14 @@ class RentalController {
         }
     }
 
-    public async finishRental(req: Request, res: Response, next: NextFunction){
+    public async finishRental(req: Request, res: Response, next: NextFunction) {
         try {
-            const {customerId, rentalId} = req.body;
+            const { customerId, rentalId } = req.body
             const newRental = await finishRentalService.execute(customerId, rentalId)
             res.status(StatusCodes.OK).send(newRental)
         } catch (err) {
-                next(err)
-            }
+            next(err)
+        }
     }
 
     public async createRental(req: Request, res: Response, next: NextFunction) {

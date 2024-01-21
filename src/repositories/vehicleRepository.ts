@@ -5,7 +5,7 @@ import { Vehicle } from "@/models/vehicle.ts"
 class VehicleRepository {
     protected static data: Required<Vehicle>[] = [
         {
-            id: randomUUID(),
+            id: "01215db3-140e-4a68-b4ff-5c6881038232",
             plate: "PPQ-9798",
             license: "B",
             type: "car",
@@ -19,8 +19,8 @@ class VehicleRepository {
             popularity: 1,
         },
         {
-            id: "d8a892f5-571d-4bd3-b44d-498441cce912",
-            plate: "PPQ-9798",
+            id: "2f171600-a65d-4430-8fc8-955a61fc70fb",
+            plate: "PPQ-9799",
             license: "B",
             type: "car",
             hourlyRentalRate: 20,
@@ -33,7 +33,7 @@ class VehicleRepository {
             popularity: 1,
         },
         {
-            id: "d8a892f5-571d-4bd3-b44d-498441cce911",
+            id: "1f745b15-0a69-4df8-a120-64ab4a3de34c",
             plate: "ABC-1234",
             license: "A",
             type: "motorcycle",
@@ -47,9 +47,9 @@ class VehicleRepository {
             popularity: 2,
         },
         {
-            id: "d8a892f5-571d-4bd3-b44d-498441cce913",
+            id: "30a86e15-39f8-4e2e-b5ef-b36eaa5d0fc8",
             plate: "ABC-1235",
-            license: "B",
+            license: "A",
             type: "motorcycle",
             hourlyRentalRate: 20,
             available: false,

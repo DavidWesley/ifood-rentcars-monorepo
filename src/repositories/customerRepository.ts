@@ -8,41 +8,38 @@ class CustomerRepository {
             id: "d8a892f5-571d-4bd3-b44d-498441cce918",
             name: "João da Silva",
             email: "joao@example.com",
-            CPF: "11111111111",
-            birthDate: new Date(2001, 2, 4, 12, 30),
+            CPF: "12442272008",
+            birthDate: new Date("2001-02-04"),
             license: "A",
             gender: "male",
         },
-        // Create 3 dummy customers
         {
-            id: "d8a892f5-571d-4bd3-b44d-498441cce919",
+            id: "cdab164a-fa1c-48f7-80f2-782c67d12547",
             name: "John Doe",
             email: "john.doe@example.com",
-            CPF: "123.456.789-00",
+            CPF: "61305705033",
             license: "A",
             birthDate: new Date("1990-01-01"),
             gender: "male",
         },
-  
         {
-            id: "d8a892f5-571d-4bd3-b44d-498441cce917",
+            id: "d9a3af3e-1372-4d2e-8ab5-cb8602738195",
             name: "Jane Doe",
             email: "jane.doe@example.com",
-            CPF: "987.654.321-00",
+            CPF: "26171836028",
             license: "B",
             birthDate: new Date("1995-05-15"),
             gender: "female",
         },
-  
         {
-            id: "d8a892f5-571d-4bd3-b44d-498441cce916",
+            id: "7222abd5-ba68-437d-a706-5aa4a7352dc1",
             name: "Sam Smith",
             email: "sam.smith@example.com",
-            CPF: "111.222.333-44",
+            CPF: "89291776033",
             license: "AB",
             birthDate: new Date("1985-08-20"),
             gender: "other",
-        }
+        },
     ]
 
     public async select(filter: Partial<Customer>): Promise<Customer[]> {
