@@ -12,8 +12,8 @@ export class LogMiddleware {
         return JSON.stringify(value, null, 2)
     }
 
-    public static execute(req: Request, _: Response, next: NextFunction) {
-        const isEmpty = (object: Record<string, any>) => {
+    public static handle(req: Request, _: Response, next: NextFunction) {
+        const isEmpty = (object: object) => {
             if (!object) return true
             return Object.keys(object).length === 0
         }

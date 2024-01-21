@@ -23,7 +23,9 @@ const defaultRateLimiter = rateLimit({
 server.use(defaultRateLimiter)
 server.use(express.json())
 server.use(helmet())
-server.use(LogMiddleware.execute)
+
+//// BEFORE ALL MIDDLEWARES ////
+server.use(LogMiddleware.handle)
 
 server.get("/check", async (_, res) => {
     return res.status(StatusCodes.OK).send(ReasonPhrases.OK)
