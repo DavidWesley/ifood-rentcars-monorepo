@@ -16,7 +16,7 @@ class VehicleRepository {
             color: "white",
             manufacturingYear: 2024,
             mass: 1000,
-            popularity: 0.1,
+            popularity: 1,
         },
         {
             id: randomUUID(),
@@ -30,15 +30,15 @@ class VehicleRepository {
             color: "red",
             manufacturingYear: 2024,
             mass: 450,
-            popularity: 0.2,
+            popularity: 2,
         },
     ]
 
-    public async list(): Promise<Vehicle[]> {
+    public async list(): Promise<Required<Vehicle>[]> {
         return Array.from(VehicleRepository.data)
     }
 
-    public async add(props: Omit<Vehicle, "id">): Promise<Vehicle> {
+    public async add(props: Omit<Vehicle, "id">): Promise<Required<Vehicle>> {
         const id = randomUUID()
         const size = await VehicleRepository.data.push({ id, ...props, available: true, popularity: 0 })
         const vehicle = VehicleRepository.data[size - 1]!
@@ -46,7 +46,7 @@ class VehicleRepository {
         return vehicle
     }
 
-    public async findByPlate(plate: string): Promise<Vehicle | null> {
+    public async findByPlate(plate: string): Promise<Required<Vehicle> | null> {
         const vehicle = VehicleRepository.data.find((vehicle) => vehicle.plate === plate)
 
         return vehicle ?? null
