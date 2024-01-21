@@ -13,6 +13,36 @@ class CustomerRepository {
             license: "A",
             gender: "male",
         },
+        // Create 3 dummy customers
+        {
+            id: "d8a892f5-571d-4bd3-b44d-498441cce919",
+            name: "John Doe",
+            email: "john.doe@example.com",
+            CPF: "123.456.789-00",
+            license: "A",
+            birthDate: new Date("1990-01-01"),
+            gender: "male",
+        },
+  
+        {
+            id: "d8a892f5-571d-4bd3-b44d-498441cce917",
+            name: "Jane Doe",
+            email: "jane.doe@example.com",
+            CPF: "987.654.321-00",
+            license: "B",
+            birthDate: new Date("1995-05-15"),
+            gender: "female",
+        },
+  
+        {
+            id: "d8a892f5-571d-4bd3-b44d-498441cce916",
+            name: "Sam Smith",
+            email: "sam.smith@example.com",
+            CPF: "111.222.333-44",
+            license: "AB",
+            birthDate: new Date("1985-08-20"),
+            gender: "other",
+        }
     ]
 
     public async select(filter: Partial<Customer>): Promise<Customer[]> {

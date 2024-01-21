@@ -7,5 +7,6 @@ const rentalRouter = Router({
 })
 
 rentalRouter.get("/", rentalController.listRentals)
+rentalRouter.put("/", rentalController.finishRental)
 
 export { rentalRouter }

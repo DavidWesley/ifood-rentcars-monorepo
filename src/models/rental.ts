@@ -25,7 +25,7 @@ export class Rental implements RentalProps {
     public readonly vehicleId: NonNullable<Vehicle["id"]>
 
     public readonly startDate: Date
-    public readonly endDate: Date
+    public endDate: Date
     public returnDate: Date | null
     public status: RentalStatus
 
