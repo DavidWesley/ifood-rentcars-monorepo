@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 import { RentalProps } from "@/models/rental.ts"
-import { uuidSchema } from "@/schemas/commons.ts"
+import { customerCPFSchema, vehiclePlateSchema } from "@/schemas/commons.ts"
 import { TimeUnits } from "@/utils/timeUnits.ts"
 
 export type SettableRentalProperties = Omit<RentalProps, "id" | "returnDate" | "status">
@@ -11,20 +11,20 @@ export type SettableRentalPropertiesObjectType = {
 }
 
 export const createRentalBodySchema = z
-    .object<SettableRentalPropertiesObjectType>({
-        vehicleId: uuidSchema,
-        customerId: uuidSchema,
+    .object({
+        cpf: customerCPFSchema,
+        plate: vehiclePlateSchema,
         startDate: z.coerce.date().refine(
             (date) => {
                 const today = new Date()
-                return date <= today
+                return today < date
             },
             { message: "A data de início deve ser superior ou igual a data atual." }
         ),
         endDate: z.coerce.date().refine(
             (date) => {
                 const today = new Date()
-                return date <= today
+                return today < date
             },
             { message: "A data de fim deve ser superior ou igual a data atual." }
         ),
