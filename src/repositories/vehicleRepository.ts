@@ -51,6 +51,20 @@ class VehicleRepository {
 
         return vehicle ?? null
     }
+
+    public async updateOne(id: NonNullable<Vehicle["id"]>, props: Omit<Partial<Vehicle>, "id">): Promise<Required<Vehicle> | null> {
+        const vehicleIndex = VehicleRepository.data.findIndex((vehicle) => vehicle.id === id)
+        if (vehicleIndex === -1) return null
+
+        VehicleRepository.data[vehicleIndex] = {
+            ...VehicleRepository.data[vehicleIndex]!,
+            ...props,
+        }
+
+        const vehicle = VehicleRepository.data[vehicleIndex]!
+
+        return vehicle
+    }
 }
 
 export const vehicleRepository = new VehicleRepository()
