@@ -28,6 +28,16 @@ class CustomerRepository {
         const customer = CustomerRepository.data.find((customer) => customer.id === id)
         return customer ?? null
     }
+
+    public async findByCPF(CPF: Customer["CPF"]): Promise<Customer | null> {
+        const customer = CustomerRepository.data.find((customer) => customer.CPF === CPF)
+        return customer ?? null
+    }
+
+    public async findByEmail(email: Customer["email"]): Promise<Customer | null> {
+        const customer = CustomerRepository.data.find((customer) => customer.email === email)
+        return customer ?? null
+    }
 }
 
 export const customerRepository = new CustomerRepository()
