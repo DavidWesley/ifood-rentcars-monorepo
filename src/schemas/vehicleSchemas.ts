@@ -45,5 +45,8 @@ export const createVehicleBodySchema = z.object({
         .min(100, { message: "A massa deve ser igual ou superior a 100." })
         .max(10_000, { message: "A massa deve ser inferior ou igual a 10.000." }),
 
-    hourlyRate: z.number().nonnegative({ message: "A taxa deve ser positiva." }).min(10.0, { message: "A taxa deve ser igual ou superior a 10." }),
+    hourlyRentalRate: z
+        .number()
+        .nonnegative({ message: "A taxa deve ser positiva." })
+        .min(10.0, { message: "A taxa deve ser igual ou superior a 10." }),
 })
