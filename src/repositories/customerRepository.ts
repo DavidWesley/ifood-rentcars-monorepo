@@ -15,6 +15,17 @@ class CustomerRepository {
         },
     ]
 
+    public async select(filter: Partial<Customer>): Promise<Customer[]> {
+        const filterEntries = Object.entries(filter)
+        if (filterEntries.length === 0) {
+            return this.list()
+        }
+
+        return await CustomerRepository.data.filter((customer) => {
+            return filterEntries.every(([key, value]) => Reflect.get(customer, key) === value)
+        })
+    }
+
     public async list(): Promise<Customer[]> {
         return Array.from(CustomerRepository.data)
     }
