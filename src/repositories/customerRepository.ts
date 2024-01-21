@@ -1,9 +1,9 @@
-import { randomUUID } from "crypto"
+import { randomUUID } from "node:crypto"
 
 import { Customer } from "@/models/customer.ts"
 
 class CustomerRepository {
-    protected static data: Customer[] = [
+    protected static data: Required<Customer>[] = [
         {
             id: "d8a892f5-571d-4bd3-b44d-498441cce918",
             name: "João da Silva",
