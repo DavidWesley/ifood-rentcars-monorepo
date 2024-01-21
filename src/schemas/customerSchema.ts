@@ -1,8 +1,8 @@
 import { z } from "zod"
 
+import { validateCpf } from "@/libs/validators.ts"
 import { Customer } from "@/models/customer.ts"
 import { TimeUnits } from "@/utils/timeUnits.ts"
-import { validateCpf } from "@/utils/validators.ts"
 
 export type SettableCustomerProperties = Omit<Customer, "id">
 

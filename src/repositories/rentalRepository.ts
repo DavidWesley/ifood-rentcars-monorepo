@@ -1,4 +1,5 @@
 import { Rental, RentalStatus } from "@/models/rental.ts";
+import { randomUUID } from "node:crypto";
 
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
@@ -59,6 +60,12 @@ class RentalRepository {
         const newRental = RentalRepository.data[rentalIndex]!
 
         return newRental
+    }
+    public async create(props: Omit<Rental, "id">): Promise<Required<Rental>> {
+        // TODO: Melhorar registro de aluguel no banco
+        const id = randomUUID()
+        const size = await RentalRepository.data.push({ id, ...props })
+        return RentalRepository.data[size - 1]!
     }
 }
 
