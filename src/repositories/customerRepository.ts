@@ -19,11 +19,9 @@ class CustomerRepository {
         return Array.from(CustomerRepository.data)
     }
 
-    public async add(customer: Customer): Promise<Customer> {
-        customer.id = randomUUID()
-        CustomerRepository.data.push(customer)
-
-        return customer
+    public async add(props: Omit<Customer, "id">): Promise<Customer> {
+        const size = await CustomerRepository.data.push({ id: randomUUID(), ...props })
+        return CustomerRepository.data[size - 1]!
     }
 
     public async findById(id: NonNullable<Customer["id"]>): Promise<Customer | null> {
