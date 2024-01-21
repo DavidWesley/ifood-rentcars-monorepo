@@ -4,6 +4,7 @@ import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
 
 import { ErrorHandlerMiddleware } from "@/middlewares/ErrorHandlerMiddleware.ts"
+import { LogMiddleware } from "@/middlewares/LogMiddleware.ts"
 import { customerRouter } from "@/routes/customerRoutes.ts"
 import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
@@ -22,6 +23,7 @@ const defaultRateLimiter = rateLimit({
 server.use(defaultRateLimiter)
 server.use(express.json())
 server.use(helmet())
+server.use(LogMiddleware.execute)
 
 server.get("/check", async (_, res) => {
     return res.status(StatusCodes.OK).send(ReasonPhrases.OK)
