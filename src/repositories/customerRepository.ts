@@ -57,22 +57,22 @@ class CustomerRepository {
         return Array.from(CustomerRepository.data)
     }
 
-    public async add(props: Omit<Customer, "id">): Promise<Customer> {
+    public async add(props: Omit<Customer, "id">): Promise<Required<Customer>> {
         const size = await CustomerRepository.data.push({ id: randomUUID(), ...props })
         return CustomerRepository.data[size - 1]!
     }
 
-    public async findById(id: NonNullable<Customer["id"]>): Promise<Customer | null> {
+    public async findById(id: NonNullable<Customer["id"]>): Promise<Required<Customer> | null> {
         const customer = CustomerRepository.data.find((customer) => customer.id === id)
         return customer ?? null
     }
 
-    public async findByCPF(CPF: Customer["CPF"]): Promise<Customer | null> {
+    public async findByCPF(CPF: Customer["CPF"]): Promise<Required<Customer> | null> {
         const customer = CustomerRepository.data.find((customer) => customer.CPF === CPF)
         return customer ?? null
     }
 
-    public async findByEmail(email: Customer["email"]): Promise<Customer | null> {
+    public async findByEmail(email: Customer["email"]): Promise<Required<Customer> | null> {
         const customer = CustomerRepository.data.find((customer) => customer.email === email)
         return customer ?? null
     }
