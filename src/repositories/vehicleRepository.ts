@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto"
 import { Vehicle } from "@/models/vehicle.ts"
 
 class VehicleRepository {
-    protected static data: Vehicle[] = [
+    protected static data: Required<Vehicle>[] = [
         {
             id: randomUUID(),
             plate: "PPQ-9798",
@@ -38,9 +38,10 @@ class VehicleRepository {
         return Array.from(VehicleRepository.data)
     }
 
-    public async add(vehicle: Vehicle): Promise<Vehicle> {
-        vehicle.id = randomUUID()
-        VehicleRepository.data.push(vehicle)
+    public async add(props: Omit<Vehicle, "id">): Promise<Vehicle> {
+        const id = randomUUID()
+        const size = await VehicleRepository.data.push({ id, ...props, available: true, popularity: 0 })
+        const vehicle = VehicleRepository.data[size - 1]!
 
         return vehicle
     }

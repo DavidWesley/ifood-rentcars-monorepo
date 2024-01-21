@@ -13,11 +13,11 @@ export interface Vehicle {
     id?: UUID
     plate: string
     type: VehicleType
-    brand?: string
-    model?: string
-    manufacturingYear?: number
-    color?: string
-    mass?: number
+    brand: string
+    model: string
+    manufacturingYear: number
+    color: string
+    mass: number
     license: LicenseType
 
     hourlyRentalRate: number
