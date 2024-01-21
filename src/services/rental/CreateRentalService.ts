@@ -1,6 +1,7 @@
+import { RentalAlreadyInProgressError } from "@/errors/RentalAlreadyInProgress"
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
 import { InvalidLicenseTypeError } from "@/errors/license/InvalidLicenseTypeError.ts"
-import { RentalAlreadyInProgressError } from "@/errors/rental/RentalAlreadyInProgress"
+
 import { RentalDateError } from "@/errors/rental/RentalDateError.ts"
 import { RentalDateMinError } from "@/errors/rental/RentalDateMinError.ts"
 import { VehicleNotFoundError } from "@/errors/vehicle/VehicleNotFoundError.ts"
@@ -9,8 +10,10 @@ import { Customer } from "@/models/customer.ts"
 import { Rental, RentalStatus } from "@/models/rental.ts"
 import { Vehicle } from "@/models/vehicle.ts"
 import { customerRepository } from "@/repositories/customerRepository.ts"
+import { invoiceRepository } from "@/repositories/invoiceRepository"
 import { rentalRepository } from "@/repositories/rentalRepository.ts"
 import { vehicleRepository } from "@/repositories/vehicleRepository.ts"
+import { createInvoiceService } from "@/services/invoice/CreateInvoiceService.ts"
 import { LicenseValidationService } from "@/services/license/LicenseValidationService.ts"
 
 class CreateRentalService {
@@ -54,9 +57,9 @@ class CreateRentalService {
         const rental = new Rental(customer.id!, vehicle.id!, startDate, endDate, RentalStatus.InProgress)
         await rentalRepository.create(rental)
 
-        // TODO: Criação de fatura
-        // const invoice = createInvoiceService.execute(rental.id, vehicle.hourlyRentalRate, rental.startDate, rental.endDate)
+        const invoice = await createInvoiceService.execute(rental.id, vehicle.hourlyRentalRate, rental.startDate, rental.endDate)
 
+        await invoiceRepository.create(invoice)
         return rental
     }
 }

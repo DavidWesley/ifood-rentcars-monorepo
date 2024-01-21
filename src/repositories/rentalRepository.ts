@@ -108,6 +108,11 @@ class RentalRepository {
         const rental = RentalRepository.data.findLast((rental) => rental.customerId === customerId)
         return rental ?? null
     }
+
+    public async findInProgressByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental> | null> {
+        const rental = RentalRepository.data.find((rental) => rental.customerId === customerId && rental.status === RentalStatus.InProgress)
+        return rental ?? null
+    }
 }
 
 export const rentalRepository = new RentalRepository()
