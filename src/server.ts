@@ -3,6 +3,7 @@ import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
 
+import { ErrorHandlerMiddleware } from "@/middlewares/ErrorHandlerMiddleware.ts"
 import { customerRouter } from "@/routes/customerRoutes.ts"
 import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
@@ -29,5 +30,8 @@ server.get("/check", async (_, res) => {
 //// ROUTES ////
 server.use("/vehicles", vehicleRouter)
 server.use("/customers", customerRouter)
+
+//// AFTER ALL MIDDLEWARES ////
+server.use(ErrorHandlerMiddleware.handle)
 
 export { server }
