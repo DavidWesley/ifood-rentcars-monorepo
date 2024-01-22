@@ -4,7 +4,7 @@ import { BaseError } from "@/errors/BaseError.ts"
 
 export class ReservationLimitExceededError extends BaseError {
     constructor(message: string) {
-        super(message, StatusCodes.CONFLICT, "RESERVATION_LIMIT_ERROR")
+        super(message, StatusCodes.CONFLICT, "RESERVATION_LIMIT_EXCEEDED_ERROR")
         this.name = "ReservationLimitExceededError"
     }
 }
