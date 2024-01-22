@@ -6,6 +6,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes"
 import { ErrorHandlerMiddleware } from "@/middlewares/ErrorHandlerMiddleware.ts"
 import { LogMiddleware } from "@/middlewares/LogMiddleware.ts"
 import { customerRouter } from "@/routes/customerRoutes.ts"
+import { invoiceRouter } from "@/routes/invoiceRoutes.ts"
 import { rentalRouter } from "@/routes/rentalRoutes.ts"
 import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
@@ -36,6 +37,7 @@ server.get("/check", async (_, res) => {
 server.use("/vehicles", vehicleRouter)
 server.use("/customers", customerRouter)
 server.use("/rentals", rentalRouter)
+server.use("/invoices", invoiceRouter)
 
 //// AFTER ALL MIDDLEWARES ////
 server.use(ErrorHandlerMiddleware.handle)

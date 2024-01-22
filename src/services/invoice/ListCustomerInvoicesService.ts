@@ -4,7 +4,7 @@ import { Invoice } from "@/models/invoice.ts"
 import { customerRepository } from "@/repositories/customerRepository.ts"
 import { invoiceRepository } from "@/repositories/invoiceRepository.ts"
 
-class ListCustomerInvoices {
+class ListCustomerInvoicesService {
     public async execute(cpf: Customer["CPF"], state?: Invoice["status"]): Promise<Required<Invoice>[]> {
         const customer = await customerRepository.findByCPF(cpf)
         if (customer === null) {
@@ -16,4 +16,4 @@ class ListCustomerInvoices {
     }
 }
 
-export const listCustomerInvoices = new ListCustomerInvoices()
+export const listCustomerInvoicesService = new ListCustomerInvoicesService()
