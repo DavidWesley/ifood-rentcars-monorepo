@@ -1,5 +1,6 @@
-import { BaseError } from "@/errors/BaseError.ts"
 import { StatusCodes } from "http-status-codes"
+
+import { BaseError } from "@/errors/BaseError.ts"
 
 export class RentalAlreadyInProgressError extends BaseError {
     constructor(cpf: string) {
