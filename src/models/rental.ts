@@ -4,7 +4,6 @@ import { Customer } from "@/models/customer.ts"
 import { Vehicle } from "@/models/vehicle.ts"
 
 export enum RentalStatus {
-    Confirmed = "confirmed",
     InProgress = "inProgress",
     Completed = "completed",
     Canceled = "canceled",
