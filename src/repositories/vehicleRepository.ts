@@ -76,7 +76,11 @@ class VehicleRepository {
 
     public async findByPlate(plate: string): Promise<Required<Vehicle> | null> {
         const vehicle = VehicleRepository.data.find((vehicle) => vehicle.plate === plate)
+        return vehicle ?? null
+    }
 
+    public async findById(id: NonNullable<Vehicle["id"]>): Promise<Required<Vehicle> | null> {
+        const vehicle = VehicleRepository.data.find((vehicle) => vehicle.id === id)
         return vehicle ?? null
     }
 
