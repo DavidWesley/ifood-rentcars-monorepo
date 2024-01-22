@@ -1,13 +1,16 @@
-import { UUID } from "node:crypto";
+import { UUID } from "node:crypto"
 
-export class Invoice {
-    id: string;
-    rentalId: string;
-    totalCost: number;
+import { Rental } from "@/models/rental.ts"
 
-    constructor(rentalId: string, totalCost: number) {
-        this.id = UUID;
-        this.rentalId = rentalId;
-        this.totalCost = totalCost;
-    }
+export enum InvoiceStatus {
+    Pending = "pending",
+    Paid = "paid",
+    Canceled = "canceled",
+}
+
+export interface Invoice {
+    id?: UUID
+    rentalId: NonNullable<Rental["id"]>
+    status: InvoiceStatus
+    totalCost?: number
 }
