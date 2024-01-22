@@ -73,9 +73,9 @@ class RentalRepository {
         return rental ?? null
     }
 
-    public async findAllByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental> | null> {
-        const rental = RentalRepository.data.find((rental) => rental.customerId === customerId)
-        return rental ?? null
+    public async findAllByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental>[]> {
+        const rentals = RentalRepository.data.filter((rental) => rental.customerId === customerId)
+        return rentals
     }
 
     public async updateOne(id: NonNullable<Rental["id"]>, props: Omit<Partial<Rental>, "id">): Promise<Required<Rental> | null> {
