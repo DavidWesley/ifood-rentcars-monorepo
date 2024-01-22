@@ -1,20 +1,18 @@
-import { RentalAlreadyInProgressError } from "@/errors/RentalAlreadyInProgress"
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
 import { InvalidLicenseTypeError } from "@/errors/license/InvalidLicenseTypeError.ts"
-
-import { RentalDateError } from "@/errors/rental/RentalDateError.ts"
-import { RentalDateMinError } from "@/errors/rental/RentalDateMinError.ts"
+import { RentalDateRangeError } from "@/errors/rental/RentalDateRangeError.ts"
+import { ReservationLimitExceededError } from "@/errors/rental/ReservationLimitExceededError.ts"
 import { VehicleNotFoundError } from "@/errors/vehicle/VehicleNotFoundError.ts"
 import { VehicleUnavailableError } from "@/errors/vehicle/VehicleUnavailableError.ts"
 import { Customer } from "@/models/customer.ts"
 import { Rental, RentalStatus } from "@/models/rental.ts"
 import { Vehicle } from "@/models/vehicle.ts"
 import { customerRepository } from "@/repositories/customerRepository.ts"
-import { invoiceRepository } from "@/repositories/invoiceRepository"
 import { rentalRepository } from "@/repositories/rentalRepository.ts"
 import { vehicleRepository } from "@/repositories/vehicleRepository.ts"
 import { createInvoiceService } from "@/services/invoice/CreateInvoiceService.ts"
 import { LicenseValidationService } from "@/services/license/LicenseValidationService.ts"
+import { calculateDurationBetweenDatesInHours } from "@/utils/calculateDurationBetweenDatesInHours.ts"
 
 class CreateRentalService {
     public async execute(cpf: NonNullable<Customer["CPF"]>, plate: Vehicle["plate"], startDate: Date, endDate: Date): Promise<Required<Rental>> {
@@ -32,34 +30,25 @@ class CreateRentalService {
             throw new VehicleUnavailableError("Veículo indisponível.")
         }
 
-        const existingRental = await rentalRepository.findInProgressByCustomerId(customer.id!);
+        const existingRental = await rentalRepository.findInProgressByCustomerId(customer.id)
         if (existingRental !== null) {
-            throw new RentalAlreadyInProgressError(cpf);
+            throw new ReservationLimitExceededError("O cliente possui um aluguel em andamento.")
         }
-
 
         if (LicenseValidationService.validateForVehicleType(customer.license, vehicle.type) === false) {
             throw new InvalidLicenseTypeError(`A CNH do usuário não é válida para alugar um veículo do tipo ${vehicle.type}.`)
         }
 
-        if (endDate <= startDate){
-            throw new RentalDateError(startDate,endDate);
+        if (endDate <= startDate || calculateDurationBetweenDatesInHours(startDate, endDate) < 24) {
+            throw new RentalDateRangeError(startDate, endDate)
         }
 
-        const diff = Math.abs(endDate.getTime() - startDate.getTime()) / 3600000;
+        await vehicleRepository.updateOne(vehicle.id, { available: false, popularity: vehicle.popularity + 1 })
 
-        if (diff < 24){
-            throw new RentalDateMinError(diff);
-        }
+        const rental = await rentalRepository.create(new Rental(customer.id, vehicle.id, startDate, endDate, RentalStatus.InProgress))
 
-        vehicleRepository.updateOne(vehicle.id!, { available: false, popularity: vehicle.popularity + 1 })
+        await createInvoiceService.execute(rental.id)
 
-        const rental = new Rental(customer.id!, vehicle.id!, startDate, endDate, RentalStatus.InProgress)
-        await rentalRepository.create(rental)
-
-        const invoice = await createInvoiceService.execute(rental.id, vehicle.hourlyRentalRate, rental.startDate, rental.endDate)
-
-        await invoiceRepository.create(invoice)
         return rental
     }
 }
