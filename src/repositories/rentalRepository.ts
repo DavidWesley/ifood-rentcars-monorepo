@@ -17,7 +17,7 @@ class RentalRepository {
             id: "5601f30f-2455-4ea7-9461-2d0c08f97301",
             customerId: "d8a892f5-571d-4bd3-b44d-498441cce919",
             vehicleId: "01215db3-140e-4a68-b4ff-5c6881038232",
-            status: RentalStatus.Confirmed,
+            status: RentalStatus.InProgress,
             startDate: nextMonth,
             endDate: nextMonth,
             returnDate: null,
@@ -73,11 +73,6 @@ class RentalRepository {
         return rental ?? null
     }
 
-    public async findActiveRentalByCustomerID(customerId: NonNullable<Rental["customerId"]>): Promise<Rental | null> {
-        const rental = RentalRepository.data.find((rental) => rental.customerId === customerId && rental.status === RentalStatus.InProgress || RentalStatus.Confirmed)
-        return rental ?? null
-    }
-
     public async findAllByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental> | null> {
         const rental = RentalRepository.data.find((rental) => rental.customerId === customerId)
         return rental ?? null
@@ -98,7 +93,6 @@ class RentalRepository {
     }
 
     public async create(props: Omit<Rental, "id">): Promise<Required<Rental>> {
-        // TODO: Melhorar registro de aluguel no banco
         const id = randomUUID()
         const size = await RentalRepository.data.push({ id, ...props })
         return RentalRepository.data[size - 1]!
