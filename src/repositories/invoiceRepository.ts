@@ -1,18 +1,30 @@
-import { Invoice } from "@/models/invoice.ts";
+import { randomUUID } from "node:crypto"
+
+import { Invoice } from "@/models/invoice.ts"
 
 class InvoiceRepository {
-    private invoices: Invoice[] = [];
+    private static data: Required<Invoice>[] = []
 
-    public async create(invoice: Invoice): Promise<void> {
-        this.invoices.push(invoice);
+    public async create(invoice: Omit<Required<Invoice>, "id">): Promise<Required<Invoice>> {
+        const id = randomUUID()
+        const size = InvoiceRepository.data.push({ id, ...invoice })
+        return InvoiceRepository.data[size - 1]!
     }
 
-    public async findById(id: string): Promise<Invoice | null> {
-        return this.invoices.find(invoice => invoice.id === id) || null;
+    public async findById(id: string): Promise<Required<Invoice> | null> {
+        return InvoiceRepository.data.find((invoice) => invoice.id === id) ?? null
     }
 
-    public async findAllByCustomerId(customerId: string): Promise<Invoice[]> {
-        return this.invoices.filter(invoice => invoice.customerId === customerId);
+    public async updateOne(id: NonNullable<Invoice["id"]>, props: Omit<Partial<Invoice>, "id">): Promise<Required<Invoice> | null> {
+        const invoiceIndex = InvoiceRepository.data.findIndex((invoice) => invoice.id === id)
+        if (invoiceIndex === -1) return null
+
+        InvoiceRepository.data[invoiceIndex] = {
+            ...InvoiceRepository.data[invoiceIndex]!,
+            ...props,
+        }
+
+        return InvoiceRepository.data[invoiceIndex]!
     }
 }
 
