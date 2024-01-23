@@ -1,6 +1,6 @@
 import { CustomerNotFoundError } from "@/errors/customer/CustomerNotFoundError.ts"
 import { RentalAlreadyFinishedError } from "@/errors/rental/RentalAlreadyFinishedError.ts"
-import { RentalDateRangeError } from "@/errors/rental/RentalDateRangeError.ts"
+// import { RentalDateRangeError } from "@/errors/rental/RentalDateRangeError.ts"
 import { RentalNotFoundError } from "@/errors/rental/RentalNotFoundError.ts"
 import { Customer } from "@/models/customer.ts"
 import { Rental, RentalStatus } from "@/models/rental.ts"
@@ -27,9 +27,10 @@ class FinishRentalService {
         }
 
         const today = date ?? new Date()
-        if (rental.startDate > today) {
-            throw new RentalDateRangeError(rental.startDate, today)
-        }
+        //INFO: Comentado para apresentação
+        // if (rental.startDate > today) {
+        //     throw new RentalDateRangeError(rental.startDate, today)
+        // }
 
         rental = (await rentalRepository.updateOne(rental.id, { status: RentalStatus.Completed, returnDate: today }))!
         vehicleRepository.updateOne(rental.vehicleId!, { available: true })
