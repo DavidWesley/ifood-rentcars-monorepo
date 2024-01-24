@@ -9,7 +9,6 @@ class CustomerController {
         try {
             const customers = await listCustomerService.execute()
             res.status(StatusCodes.OK).send(customers)
-            next()
         } catch (err) {
             next(err)
         }
@@ -19,7 +18,6 @@ class CustomerController {
         try {
             const customer = await createCustomerService.execute(req.body)
             res.status(StatusCodes.CREATED).send(customer)
-            next()
         } catch (err) {
             next(err)
         }

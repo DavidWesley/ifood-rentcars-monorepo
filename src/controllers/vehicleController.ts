@@ -9,7 +9,6 @@ class VehicleController {
         try {
             const vehicles = await listVehicleService.execute()
             res.status(StatusCodes.OK).send(vehicles)
-            next()
         } catch (err) {
             next(err)
         }
@@ -19,7 +18,6 @@ class VehicleController {
         try {
             const vehicle = await createVehicleService.execute(req.body)
             res.status(StatusCodes.CREATED).send(vehicle)
-            next()
         } catch (err) {
             next(err)
         }
@@ -29,7 +27,6 @@ class VehicleController {
         try {
             const vehicles = (await listVehicleService.execute()).filter((v) => v.available === true)
             res.status(StatusCodes.OK).send(vehicles)
-            next()
         } catch (err) {
             next(err)
         }

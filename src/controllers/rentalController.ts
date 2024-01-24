@@ -11,7 +11,6 @@ class RentalController {
         try {
             const rentals = await listRentalService.execute()
             res.status(StatusCodes.OK).send(rentals)
-            next()
         } catch (err) {
             next(err)
         }
@@ -32,7 +31,6 @@ class RentalController {
             const { cpf, plate, startDate, endDate } = createRentalBodySchema.parse(req.body)
             const rental = await createRentalService.execute(cpf, plate, startDate, endDate)
             res.status(StatusCodes.CREATED).send(rental)
-            next()
         } catch (err) {
             next(err)
         }

@@ -11,7 +11,6 @@ class InvoiceController {
             const body = listCustomerInvoicesBodySchema.parse(req.body)
             const customerInvoices = await listCustomerInvoicesService.execute(body.cpf, query?.state)
             res.status(StatusCodes.OK).send(customerInvoices)
-            next()
         } catch (err) {
             next(err)
         }
