@@ -1,4 +1,4 @@
-import { ENV } from "@/libs/env.ts"
+import { ENV } from "@/env.ts"
 import { server } from "@/server.ts"
 
 server.listen(ENV.PORT, ENV.HOST, () => {

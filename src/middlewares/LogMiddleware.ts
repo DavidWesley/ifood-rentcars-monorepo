@@ -1,4 +1,4 @@
-import { ENV } from "@/libs/env.ts"
+import { ENV } from "@/env.ts"
 import { NextFunction, Request, Response } from "express"
 
 export class LogMiddleware {
