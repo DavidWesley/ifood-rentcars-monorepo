@@ -22,8 +22,8 @@
     "dev": "cross-env PORT=3333 tsx watch --env-file=.env src/main.ts",
     "build": "tsup --config tsup.config.ts src",
     "lint": "eslint",
-    "lint:fix": "eslint . --ext .js,.ts --fix",
-    "lint:all": "eslint src --ext .js,.ts --max-warnings=0 --fix",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "lint:all": "eslint src --ext .ts --max-warnings=0 --fix",
     "prepare": "husky install"
   },
   "author": {
