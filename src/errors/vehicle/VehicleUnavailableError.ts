@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes"
 
-import { BaseError } from "@/errors/BaseError.ts"
+import { AppError } from "@/errors/AppError.ts"
 
-export class VehicleUnavailableError extends BaseError {
+export class VehicleUnavailableError extends AppError {
     constructor(message: string) {
-        super(message, StatusCodes.EXPECTATION_FAILED, "VEHICLE_UNAVAILABLE_ERROR")
+        super(message, StatusCodes.EXPECTATION_FAILED, "UNAVAILABLE_ERROR")
         this.name = "VehicleUnavailableError"
     }
 }

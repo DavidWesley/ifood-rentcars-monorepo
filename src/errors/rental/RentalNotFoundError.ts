@@ -1,8 +1,8 @@
 import { StatusCodes } from "http-status-codes"
 
-import { BaseError } from "@/errors/BaseError.ts"
+import { AppError } from "@/errors/AppError.ts"
 
-export class RentalNotFoundError extends BaseError {
+export class RentalNotFoundError extends AppError {
     constructor(rentalId: string) {
         const message = `Aluguel com o id:${rentalId} não encontrado`
         super(message, StatusCodes.NOT_FOUND, "NOT_FOUND_ERROR")

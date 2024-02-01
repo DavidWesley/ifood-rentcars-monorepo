@@ -1,11 +1,11 @@
 import { StatusCodes } from "http-status-codes"
 
-import { BaseError } from "@/errors/BaseError.ts"
+import { AppError } from "@/errors/AppError.ts"
 
-export class VehicleAlreadyExistsError extends BaseError {
+export class VehicleAlreadyExistsError extends AppError {
     constructor(plate: string) {
         const message = `Veículo com a placa ${plate} já existe.`
-        super(message, StatusCodes.CONFLICT, "VEHICLE_ALREADY_EXISTS_ERROR")
+        super(message, StatusCodes.CONFLICT, "ALREADY_EXISTS_ERROR")
         this.name = "VehicleAlreadyExistsError"
     }
 }

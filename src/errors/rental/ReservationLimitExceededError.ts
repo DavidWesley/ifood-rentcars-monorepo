@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes"
 
-import { BaseError } from "@/errors/BaseError.ts"
+import { AppError } from "@/errors/AppError.ts"
 
-export class ReservationLimitExceededError extends BaseError {
+export class ReservationLimitExceededError extends AppError {
     constructor(message: string) {
-        super(message, StatusCodes.CONFLICT, "RESERVATION_LIMIT_EXCEEDED_ERROR")
+        super(message, StatusCodes.CONFLICT, "LIMIT_EXCEEDED_ERROR")
         this.name = "ReservationLimitExceededError"
     }
 }

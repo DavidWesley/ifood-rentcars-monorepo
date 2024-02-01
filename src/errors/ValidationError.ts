@@ -1,17 +1,17 @@
 import { StatusCodes } from "http-status-codes"
 
-import { BaseError, BaseErrorProps } from "@/errors/BaseError.ts"
+import { AppError, AppErrorProps } from "@/errors/AppError.ts"
 
 export interface FieldValidationErrorProps {
     field: string
     message: string
 }
 
-export interface ValidationErrorProps extends BaseErrorProps {
+export interface ValidationErrorProps extends AppErrorProps {
     fieldValidationErrors: FieldValidationErrorProps[]
 }
 
-export class ValidationError extends BaseError {
+export class ValidationError extends AppError {
     fieldValidationErrors: { field: string; message: string }[]
 
     constructor(message: string, fieldValidationErrors: FieldValidationErrorProps[]) {

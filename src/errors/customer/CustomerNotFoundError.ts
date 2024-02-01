@@ -1,11 +1,11 @@
 import { StatusCodes } from "http-status-codes"
 
-import { BaseError } from "@/errors/BaseError.ts"
+import { AppError } from "@/errors/AppError.ts"
 
-export class CustomerNotFoundError extends BaseError {
+export class CustomerNotFoundError extends AppError {
     constructor(id: string) {
         const message = `Client com o ID ${id} não existe.`
-        super(message, StatusCodes.NOT_FOUND, "CUSTOMER_NOT_FOUND_ERROR")
+        super(message, StatusCodes.NOT_FOUND, "NOT_FOUND_ERROR")
         this.name = "CustomerNotFoundError"
     }
 }
