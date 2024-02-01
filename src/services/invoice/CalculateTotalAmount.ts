@@ -7,7 +7,7 @@ import { TimeUnits } from "@/utils/timeUnits.ts"
 export class CalculateTotalAmount {
     private static OVERDUE_FEE_MULTIPLIER = 2
 
-    public static async calculate(rental: Required<Rental>): Promise<number> {
+    public static async execute(rental: Required<Rental>): Promise<number> {
         const vehicle = await vehicleRepository.findById(rental.vehicleId)
         if (vehicle === null) {
             throw new VehicleNotFoundError(rental.vehicleId)

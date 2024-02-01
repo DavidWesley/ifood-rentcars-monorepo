@@ -12,7 +12,7 @@ class CreateInvoiceService {
             throw new RentalNotFoundError(rentalId)
         }
 
-        const totalAmount = await CalculateTotalAmount.calculate(rental)
+        const totalAmount = await CalculateTotalAmount.execute(rental)
 
         return await invoiceRepository.create({
             rentalId: rental.id,
