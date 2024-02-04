@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { RentalProps } from "@/models/rental.ts"
 import { customerCPFSchema, vehiclePlateSchema } from "@/schemas/commons.ts"
-import { TimeUnits } from "@/utils/timeUnits.ts"
+import { calculateDurationBetweenDatesInHours } from "@/utils/calculateDurationBetweenDatesInHours.ts"
 
 export type SettableRentalProperties = Omit<RentalProps, "id" | "returnDate" | "status">
 
@@ -40,8 +40,7 @@ export const createRentalBodySchema = z
             })
         }
 
-        const diffDurationBetweenDates = endDate.getTime() - startDate.getTime()
-        const diffDurationTimeInHours = TimeUnits.convertTimeDurationToParts(diffDurationBetweenDates, "millisecond", "hour").hour!
+        const diffDurationTimeInHours = calculateDurationBetweenDatesInHours(startDate, endDate)
 
         if (diffDurationTimeInHours < 24) {
             ctx.addIssue({

@@ -20,7 +20,7 @@ export const createCustomerBodySchema = z.object<SettableCustomerPropertiesObjec
             const today = new Date()
             const duration = today.getTime() - date.getTime()
             const resolvedDuration = TimeUnits.convertTimeDurationToParts(duration, "millisecond", "year")
-            const isAdult = resolvedDuration.year! >= 18
+            const isAdult = (resolvedDuration.year ?? 0) >= 18
             return isAdult
         },
         { message: "O cliente deve ter pelo menos 18 anos." }

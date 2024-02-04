@@ -11,7 +11,7 @@ class InvoiceRepository {
     public async create(invoice: Omit<Required<Invoice>, "id">): Promise<Required<Invoice>> {
         const id = randomUUID()
         const size = InvoiceRepository.data.push({ id, ...invoice })
-        return InvoiceRepository.data[size - 1]!
+        return InvoiceRepository.data[size - 1] as Required<Invoice>
     }
 
     public async findById(id: string): Promise<Required<Invoice> | null> {

@@ -58,13 +58,16 @@ export class TimeUnits {
         let remainingMilliseconds = duration * TimeUnits.CONSTANTS[inputScale]
 
         return Object.freeze(
-            TimeUnits.NAMES.reduceRight((obj, name) => {
-                if (TimeUnits.CONSTANTS[name] <= TimeUnits.CONSTANTS[outputScale]) {
-                    Reflect.set(obj, name, Math.floor(remainingMilliseconds / TimeUnits.CONSTANTS[name]))
-                    remainingMilliseconds %= TimeUnits.CONSTANTS[name]
-                }
-                return obj
-            }, {} as Partial<TimeDetailType>)
+            TimeUnits.NAMES.reduceRight(
+                (obj, name) => {
+                    if (TimeUnits.CONSTANTS[name] <= TimeUnits.CONSTANTS[outputScale]) {
+                        Reflect.set(obj, name, Math.floor(remainingMilliseconds / TimeUnits.CONSTANTS[name]))
+                        remainingMilliseconds %= TimeUnits.CONSTANTS[name]
+                    }
+                    return obj
+                },
+                {} as Partial<TimeDetailType>
+            )
         )
     }
 

@@ -20,16 +20,14 @@ export class CalculateTotalAmount {
             // Modo de cancelamento de aluguel antes do início do aluguel
             // Cliente deve pagar uma multa equivalente a uma diária de aluguel
             return 24 * vehicle.hourlyRentalRate
-        } else if (normalizedReturnDate > rental.endDate) {
+        }
+        if (normalizedReturnDate > rental.endDate) {
             // INFO:
             // Modo de encerramento de aluguel apos o fim do prazo determinado
             // Cliente deve pagar uma multa equivalente a duas diárias de aluguel por dia de atraso
 
-            const daysOverdue = TimeUnits.convertTimeDurationToParts(
-                calculateDurationBetweenDatesInHours(rental.endDate, normalizedReturnDate),
-                "hour",
-                "day"
-            ).day!
+            const overdueDurationInHours = calculateDurationBetweenDatesInHours(rental.endDate, normalizedReturnDate)
+            const daysOverdue = TimeUnits.convertTimeDurationToParts(overdueDurationInHours, "hour", "day").day ?? 1
 
             const regularCost = Math.ceil(calculateDurationBetweenDatesInHours(rental.startDate, rental.endDate)) * vehicle.hourlyRentalRate
             const overdueCost = Math.ceil(daysOverdue) * vehicle.hourlyRentalRate * CalculateTotalAmount.OVERDUE_FEE_MULTIPLIER

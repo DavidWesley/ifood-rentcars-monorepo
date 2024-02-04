@@ -21,9 +21,8 @@
     "start": "NODE_ENV=production node --env-file=.env dist/main.js",
     "dev": "cross-env PORT=3333 tsx watch --env-file=.env src/main.ts",
     "build": "tsup --config tsup.config.ts src",
-    "lint": "eslint",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "lint:all": "eslint src --ext .ts --max-warnings=0 --fix",
+    "lint": "biome lint ./src --diagnostic-level=error",
+    "lint:fix": "biome check --apply . --diagnostic-level=error",
     "prepare": "husky install"
   },
   "author": {
@@ -37,18 +36,14 @@
   },
   "homepage": "https://github.com/DavidWesley/ifood-rentcars-api#readme",
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@tsconfig/node-lts": "^20.1.1",
     "@tsconfig/strictest": "^2.0.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.5",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.0",
-    "prettier": "^3.2.4",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"

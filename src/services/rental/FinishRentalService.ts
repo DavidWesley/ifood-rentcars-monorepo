@@ -32,10 +32,10 @@ class FinishRentalService {
         }
 
         rental = (await rentalRepository.updateOne(rental.id, { status: RentalStatus.Completed, returnDate: today }))!
-        vehicleRepository.updateOne(rental.vehicleId!, { available: true })
+        vehicleRepository.updateOne(rental.vehicleId, { available: true })
 
         // TODO: No futuro, remover essa operação de pagamento de fatura dependente do aluguel
-        await payInvoiceService.execute((await invoiceRepository.findByRentalId(rental.id))!.id)
+        await payInvoiceService.execute((await invoiceRepository.findByRentalId(rental.id)).id!)
 
         return rental
     }

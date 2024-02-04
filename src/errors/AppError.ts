@@ -11,7 +11,7 @@ export abstract class AppError extends Error implements AppErrorProps {
     statusCode: number
     errorCode: string
 
-    constructor(message: string, statusCode: number = StatusCodes.BAD_REQUEST, errorCode: ErrorCodeStringType) {
+    constructor(message: string, statusCode: StatusCodes, errorCode: ErrorCodeStringType) {
         super(message)
         this.name = "AppError"
         this.statusCode = statusCode

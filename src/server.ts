@@ -20,7 +20,7 @@ const defaultRateLimiter = rateLimit({
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     statusCode: StatusCodes.TOO_MANY_REQUESTS,
-    skip: (req) => ALLOW_LIST_IPS.includes(req.ip!),
+    skip: (req) => ALLOW_LIST_IPS.some((ip) => ip === req.ip),
 })
 
 server.use(defaultRateLimiter)

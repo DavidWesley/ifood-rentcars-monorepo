@@ -6,7 +6,7 @@ import { convertZodErrorIssuesToFieldsErrors } from "@/utils/convertZodErrorsToF
 
 export class ValidateParamsFromSchemaMiddleware {
     public static handle(schema: ZodType, message?: string) {
-        return async function (req: Request, res: Response, next: NextFunction) {
+        return async (req: Request, res: Response, next: NextFunction) => {
             const parsedParams = await schema.safeParseAsync(req.params)
             if (parsedParams.success === false) {
                 const fieldValidationErrors = convertZodErrorIssuesToFieldsErrors(parsedParams.error)
