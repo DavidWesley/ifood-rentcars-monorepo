@@ -1,6 +1,16 @@
 import { StatusCodes } from "http-status-codes"
 
-import { ErrorCodeStringType } from "@/errors/errors.ts"
+export type ErrorCodeType =
+    | "ALREADY_EXISTS"
+    | "NOT_FOUND"
+    | "VALIDATION"
+    | "UNAVAILABLE"
+    | "INVALID_TYPE"
+    | "TIME_RANGE"
+    | "LIMIT_EXCEEDED"
+    | "INVALID_OPERATION"
+
+export type ErrorCodeStringType = `${Uppercase<ErrorCodeType>}_ERROR`
 
 export interface AppErrorProps {
     statusCode: StatusCodes
