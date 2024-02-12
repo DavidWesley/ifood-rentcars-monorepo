@@ -13,7 +13,7 @@ export class ValidateParamsFromSchemaMiddleware {
                 const error = new ValidationError(message || "Erro de validação", fieldValidationErrors)
 
                 res.status(error.statusCode)
-                console.log("[PARAMS_SCHEMA_VALIDATION_ERROR]:", error.errorCode)
+                console.error("[PARAMS_SCHEMA_VALIDATION_ERROR]:", error.errorCode)
                 next(error)
             } else {
                 req.params = parsedParams.data

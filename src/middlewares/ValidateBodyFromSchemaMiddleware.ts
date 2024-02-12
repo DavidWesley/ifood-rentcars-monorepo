@@ -14,7 +14,7 @@ export class ValidateBodyFromSchemaMiddleware {
 
                 res.status(error.statusCode)
 
-                console.log("[VALIDATION_BODY_SCHEMA_ERROR]:", error.errorCode)
+                console.error("[VALIDATION_BODY_SCHEMA_ERROR]:", error.errorCode)
                 next(error)
             } else {
                 req.body = parsedBody.data

@@ -14,7 +14,7 @@ export class ValidateQueryFromSchemaMiddleware {
 
                 res.status(error.statusCode)
 
-                console.log("[VALIDATION_QUERY_SCHEMA_ERROR]:", error.errorCode)
+                console.error("[VALIDATION_QUERY_SCHEMA_ERROR]:", error.errorCode)
                 next(error)
             } else {
                 req.query = parsedQuery.data
