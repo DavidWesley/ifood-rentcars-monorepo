@@ -1,4 +1,6 @@
-import express from "express"
+import http, { Server } from "node:http"
+
+import express, { Application } from "express"
 import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
@@ -6,12 +8,15 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes"
 import { InvalidRouteError } from "@/errors/InvalidRouteError.ts"
 import { customerRouter } from "@/routes/customerRoutes.ts"
 import { invoiceRouter } from "@/routes/invoiceRoutes.ts"
-import { ErrorHandlerMiddleware } from "@/routes/middlewares/ErrorHandlerMiddleware.ts"
-import { LogMiddleware } from "@/routes/middlewares/LogMiddleware.ts"
 import { rentalRouter } from "@/routes/rentalRoutes.ts"
 import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
-const server = express()
+import { ErrorHandlerMiddleware } from "@/routes/middlewares/ErrorHandlerMiddleware.ts"
+import { LogMiddleware } from "@/routes/middlewares/LogMiddleware.ts"
+
+const app: Application = express()
+const server: Server = http.createServer(app)
+
 const ALLOW_LIST_IPS = ["127.0.0.1", "::1"]
 
 const defaultRateLimiter = rateLimit({
@@ -23,26 +28,25 @@ const defaultRateLimiter = rateLimit({
     skip: (req) => ALLOW_LIST_IPS.some((ip) => ip === req.ip),
 })
 
-server.use(defaultRateLimiter)
-server.use(express.json())
-server.use(helmet())
+app.use(defaultRateLimiter)
+app.use(express.json())
+app.use(helmet())
 
 //// BEFORE ALL MIDDLEWARES ////
-server.use(LogMiddleware.handle)
+app.use(LogMiddleware.handle)
 
-server.get("/check", async (_, res) => {
+app.get("/check", async (_, res) => {
     return res.status(StatusCodes.OK).send(ReasonPhrases.OK)
 })
 
 //// ROUTES ////
-server.use("/vehicles", vehicleRouter)
-server.use("/customers", customerRouter)
-server.use("/rentals", rentalRouter)
-server.use("/invoices", invoiceRouter)
+app.use("/vehicles", vehicleRouter)
+app.use("/customers", customerRouter)
+app.use("/rentals", rentalRouter)
+app.use("/invoices", invoiceRouter)
 
 //// AFTER ALL MIDDLEWARES ////
-
-server.use((_req, _res, next) => next(new InvalidRouteError("Rota não encontrada")))
-server.use(ErrorHandlerMiddleware.handle)
+app.use((_, __, next) => next(new InvalidRouteError("Rota não encontrada")))
+app.use(ErrorHandlerMiddleware.handle)
 
 export { server }
