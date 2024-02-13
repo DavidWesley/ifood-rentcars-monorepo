@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 import { customerController } from "@/controllers/customerController.ts"
-import { ValidateBodyFromSchemaMiddleware } from "@/middlewares/ValidateBodyFromSchemaMiddleware.ts"
+import { ValidateBodyFromSchemaMiddleware } from "@/routes/middlewares/ValidateBodyFromSchemaMiddleware.ts"
 import { createCustomerBodySchema } from "@/schemas/customerSchema.ts"
 
 const customerRouter = Router({

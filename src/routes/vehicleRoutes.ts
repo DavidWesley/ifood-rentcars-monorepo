@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 import { vehicleController } from "@/controllers/vehicleController.ts"
-import { ValidateBodyFromSchemaMiddleware } from "@/middlewares/ValidateBodyFromSchemaMiddleware.ts"
+import { ValidateBodyFromSchemaMiddleware } from "@/routes/middlewares/ValidateBodyFromSchemaMiddleware.ts"
 import { createVehicleBodySchema } from "@/schemas/vehicleSchemas.ts"
 
 const vehicleRouter = Router({

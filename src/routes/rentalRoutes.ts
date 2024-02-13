@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 import { rentalController } from "@/controllers/rentalController.ts"
-import { ValidateBodyFromSchemaMiddleware } from "@/middlewares/ValidateBodyFromSchemaMiddleware.ts"
+import { ValidateBodyFromSchemaMiddleware } from "@/routes/middlewares/ValidateBodyFromSchemaMiddleware.ts"
 import { createRentalBodySchema, finishRentalBodySchema } from "@/schemas/rentalSchemas.ts"
 
 const rentalRouter = Router({

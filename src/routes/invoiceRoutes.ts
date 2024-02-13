@@ -1,8 +1,8 @@
 import { Router } from "express"
 
 import { invoiceController } from "@/controllers/invoiceController.ts"
-import { ValidateBodyFromSchemaMiddleware } from "@/middlewares/ValidateBodyFromSchemaMiddleware.ts"
-import { ValidateQueryFromSchemaMiddleware } from "@/middlewares/ValidateQueryFromSchemaMiddleware.ts"
+import { ValidateBodyFromSchemaMiddleware } from "@/routes/middlewares/ValidateBodyFromSchemaMiddleware.ts"
+import { ValidateQueryFromSchemaMiddleware } from "@/routes/middlewares/ValidateQueryFromSchemaMiddleware.ts"
 import { listCustomerInvoicesBodySchema, listInvoicesQuerySchema } from "@/schemas/invoiceSchemas.ts"
 
 const invoiceRouter = Router({

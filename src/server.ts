@@ -4,10 +4,10 @@ import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
 
 import { InvalidRouteError } from "@/errors/InvalidRouteError.ts"
-import { ErrorHandlerMiddleware } from "@/middlewares/ErrorHandlerMiddleware.ts"
-import { LogMiddleware } from "@/middlewares/LogMiddleware.ts"
 import { customerRouter } from "@/routes/customerRoutes.ts"
 import { invoiceRouter } from "@/routes/invoiceRoutes.ts"
+import { ErrorHandlerMiddleware } from "@/routes/middlewares/ErrorHandlerMiddleware.ts"
+import { LogMiddleware } from "@/routes/middlewares/LogMiddleware.ts"
 import { rentalRouter } from "@/routes/rentalRoutes.ts"
 import { vehicleRouter } from "@/routes/vehicleRoutes.ts"
 
