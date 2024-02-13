@@ -2,8 +2,8 @@ import { Customer } from "@/models/customer.ts"
 import { customerRepository } from "@/repositories/customerRepository.ts"
 
 class ListCustomerService {
-    public async execute(): Promise<Customer[]> {
-        const customers: Customer[] = await customerRepository.list()
+    public async execute(): Promise<Required<Customer>[]> {
+        const customers = await customerRepository.list()
         return customers
     }
 }
