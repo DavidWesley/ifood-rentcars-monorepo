@@ -1,8 +1,8 @@
 import { Router } from "express"
 
 import { vehicleController } from "@/controllers/vehicleController.ts"
-import { ValidateBodyFromSchemaMiddleware } from "@/routes/middlewares/ValidateBodyFromSchemaMiddleware.ts"
 import { createVehicleBodySchema } from "@/schemas/vehicleSchemas.ts"
+import { ValidateRequestSchemaMiddleware } from "./middlewares/ValidateRequestSchemaMiddleware.ts"
 
 const vehicleRouter = Router({
     caseSensitive: true,
@@ -10,11 +10,8 @@ const vehicleRouter = Router({
 })
 
 vehicleRouter.get("/", vehicleController.listVehicles)
+vehicleRouter.post("/", ValidateRequestSchemaMiddleware.handle({ body: createVehicleBodySchema }), vehicleController.createVehicle)
+
 vehicleRouter.get("/available", vehicleController.listAvailableVehicles)
-vehicleRouter.post(
-    "/",
-    ValidateBodyFromSchemaMiddleware.handle(createVehicleBodySchema, "Erro de validação na criação do veículo"),
-    vehicleController.createVehicle
-)
 
 export { vehicleRouter }

@@ -1,9 +1,8 @@
 import { Router } from "express"
 
 import { invoiceController } from "@/controllers/invoiceController.ts"
-import { ValidateBodyFromSchemaMiddleware } from "@/routes/middlewares/ValidateBodyFromSchemaMiddleware.ts"
-import { ValidateQueryFromSchemaMiddleware } from "@/routes/middlewares/ValidateQueryFromSchemaMiddleware.ts"
 import { listCustomerInvoicesBodySchema, listInvoicesQuerySchema } from "@/schemas/invoiceSchemas.ts"
+import { ValidateRequestSchemaMiddleware } from "./middlewares/ValidateRequestSchemaMiddleware.ts"
 
 const invoiceRouter = Router({
     caseSensitive: true,
@@ -12,8 +11,7 @@ const invoiceRouter = Router({
 
 invoiceRouter.post(
     "/list",
-    ValidateBodyFromSchemaMiddleware.handle(listCustomerInvoicesBodySchema),
-    ValidateQueryFromSchemaMiddleware.handle(listInvoicesQuerySchema),
+    ValidateRequestSchemaMiddleware.handle({ body: listCustomerInvoicesBodySchema, query: listInvoicesQuerySchema }),
     invoiceController.listCustomerInvoices
 )
 
