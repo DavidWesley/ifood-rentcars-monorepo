@@ -25,5 +25,5 @@ export const createCustomerBodySchema = z.object<SettableCustomerPropertiesObjec
         },
         { message: "O cliente deve ter pelo menos 18 anos." }
     ),
-    CPF: customerCPFSchema,
+    cpf: customerCPFSchema,
 })

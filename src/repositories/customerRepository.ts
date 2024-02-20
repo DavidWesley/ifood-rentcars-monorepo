@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto"
+import { db } from "@repo/drizzle"
 
 import { Customer } from "@/models/customer.ts"
 
@@ -17,7 +18,8 @@ class CustomerRepository {
     }
 
     public async list(): Promise<Required<Customer>[]> {
-        return Array.from(CustomerRepository.data)
+        const customers = (await db.query.customers.findMany()) satisfies Required<Customer[]>
+        return customers
     }
 
     public async add(props: Omit<Customer, "id">): Promise<Required<Customer>> {
@@ -30,8 +32,8 @@ class CustomerRepository {
         return customer ?? null
     }
 
-    public async findByCPF(CPF: Customer["CPF"]): Promise<Required<Customer> | null> {
-        const customer = CustomerRepository.data.find((customer) => customer.CPF === CPF)
+    public async findByCPF(CPF: Customer["cpf"]): Promise<Required<Customer> | null> {
+        const customer = CustomerRepository.data.find((customer) => customer.cpf === CPF)
         return customer ?? null
     }
 

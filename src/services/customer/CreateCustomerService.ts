@@ -7,7 +7,7 @@ import { createCustomerBodySchema } from "@/schemas/customerSchema.ts"
 
 class CreateCustomerService {
     public async execute(props: z.output<typeof createCustomerBodySchema>): Promise<Required<Customer>> {
-        const customerAlreadyExistsArray = await Promise.all([customerRepository.findByCPF(props.CPF), customerRepository.findByEmail(props.email)])
+        const customerAlreadyExistsArray = await Promise.all([customerRepository.findByCPF(props.cpf), customerRepository.findByEmail(props.email)])
 
         if (customerAlreadyExistsArray.some((customer) => customer !== null)) {
             throw new CustomerAlreadyExistsError("CPF ou e-mail informado já existem no sistema.")

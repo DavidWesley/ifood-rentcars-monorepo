@@ -8,7 +8,7 @@ export interface Customer {
     id?: UUID
     name: string
     email: string
-    CPF: string
+    cpf: string
     license: LicenseType
     birthDate: Date
     gender: BaseCustomerGenderType
