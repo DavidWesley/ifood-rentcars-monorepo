@@ -13,6 +13,10 @@ class CreateCustomerService {
             throw new CustomerAlreadyExistsError("CPF ou e-mail informado já existem no sistema.")
         }
 
+        if (props.license !== "A" && props.license !== "B") {
+            throw new Error("Invalid license type")
+        }
+
         const customer = await customerRepository.add(props)
         return customer
     }
