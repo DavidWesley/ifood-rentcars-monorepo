@@ -1,0 +1,16 @@
+{
+  "name": "@repo/env",
+  "version": "1.0.0",
+  "description": "Pacote que controla as variáveis de ambiente da aplicação",
+  "main": "main.ts",
+  "types": "main.ts",
+  "type": "module",
+  "private": "true",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

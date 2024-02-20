@@ -1,4 +1,4 @@
-import { ENV } from "@/env.ts"
+import { ENV } from "@repo/env"
 import { NextFunction, Request, Response } from "express"
 
 export class LogMiddleware {
@@ -27,7 +27,7 @@ export class LogMiddleware {
 
         const requestInfo = [params, query, body].filter(Boolean).join("\n")
 
-        switch (ENV.NODE_ENV) {
+        switch (ENV.server.NODE_ENV) {
             case "production":
                 console.log(`[LOG] ${dateTimeString} ${req.method} ${req.originalUrl}`)
                 break
