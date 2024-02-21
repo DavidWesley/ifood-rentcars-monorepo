@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import { AppError } from "@/errors/AppError.ts";
 import { ValidationError } from "@/errors/ValidationError.ts";
+import { pinoHttpLogger } from "./PinoLogger.ts";
 
 export class ErrorHandlerMiddleware {
     public static handle(err: Error, req: Request, res: Response, next: NextFunction) {
@@ -31,11 +32,14 @@ export class ErrorHandlerMiddleware {
         if (!res.headersSent) {
             if (req.headers['content-type'] === 'application/json') {
                 res.status((err instanceof ValidationError || err instanceof AppError ? err.statusCode : StatusCodes.INTERNAL_SERVER_ERROR)).json(errorResponse);
+                pinoHttpLogger.logger.error({err})
             } else {
-                res.status((err instanceof ValidationError || err instanceof AppError ? err.statusCode : StatusCodes.INTERNAL_SERVER_ERROR)).send(this.jsonToHtml(errorResponse));
+                res.status((err instanceof ValidationError || err instanceof AppError ? err.statusCode : StatusCodes.INTERNAL_SERVER_ERROR)).send(ErrorHandlerMiddleware.jsonToHtml(errorResponse));
+                pinoHttpLogger.logger.error({err})
             }
         } else {
             next(err);
+            pinoHttpLogger.logger.error({err})
         }
     }
 
