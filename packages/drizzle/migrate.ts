@@ -1,9 +1,9 @@
-import { drizzle } from "drizzle-orm/better-sqlite3"
-import { migrate } from "drizzle-orm/better-sqlite3/migrator"
-import { connection } from "./main.ts"
+import { migrate } from "drizzle-orm/postgres-js/migrator"
+import { connection, db } from "./db.ts"
+// const migrationClient = postgres(ENV.DATABASE_URL, { max: 1, ssl: "require" })
 
-const db = drizzle(connection)
+// This will run migrations on the database, skipping the ones already applied
+await migrate(db, { migrationsFolder: "./migrations" })
 
-migrate(db, { migrationsFolder: "./migrations" })
-
-connection.close()
+// Don't forget to close the connection, otherwise the script will hang
+await connection.end()

@@ -27,7 +27,7 @@ export class LogMiddleware {
 
         const requestInfo = [params, query, body].filter(Boolean).join("\n")
 
-        switch (ENV.server.NODE_ENV) {
+        switch (ENV.NODE_ENV) {
             case "production":
                 console.log(`[LOG] ${dateTimeString} ${req.method} ${req.originalUrl}`)
                 break

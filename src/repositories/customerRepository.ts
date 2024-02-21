@@ -1,9 +1,8 @@
-// import { randomUUID } from "node:crypto"
 import { db } from "@repo/drizzle"
+import { customers } from "@repo/drizzle/schema"
+import { eq } from "drizzle-orm"
 
 import { Customer } from "@/models/customer.ts"
-
-import { customers } from "packages/drizzle/schema/customer.ts"
 
 class CustomerRepository {
     protected static data: Required<Customer>[] = []
@@ -24,12 +23,6 @@ class CustomerRepository {
         return customers
     }
 
-    // public async add(props: Omit<Customer, "id">): Promise<Required<Customer>> {
-
-    //     const size = await CustomerRepository.data.push({ id: randomUUID(), ...props })
-    //     return CustomerRepository.data[size - 1] as Required<Customer>
-    // }
-
     public async add(props: Omit<Customer, "id">): Promise<Required<Customer>> {
         if (props.license !== "A" && props.license !== "B") {
             throw new Error("Invalid license type")
@@ -47,44 +40,24 @@ class CustomerRepository {
         return newCustomer as unknown as Required<Customer>
     }
 
-    // public async findById(id: NonNullable<Customer["id"]>): Promise<Required<Customer> | null> {
-    //     const customer = CustomerRepository.data.find((customer) => customer.id === id)
-    //     return customer ?? null
-    // }
-
     public async findById(id: NonNullable<Customer["id"]>): Promise<Required<Customer> | null> {
         const customer = await db.query.customers.findFirst({
-            with: {
-                id: id,
-            },
+            where: eq(customers.id, id),
         })
         return customer ?? null
     }
-
-    // public async findByCPF(CPF: Customer["cpf"]): Promise<Required<Customer> | null> {
-    //     const customer = CustomerRepository.data.find((customer) => customer.cpf === CPF)
-    //     return customer ?? null
-    // }
 
     public async findByCPF(CPF: Customer["cpf"]): Promise<Required<Customer> | null> {
         const customer = await db.query.customers.findFirst({
-            with: {
-                cpf: CPF,
-            },
+            where: eq(customers.cpf, CPF),
         })
+
         return customer ?? null
     }
 
-    // public async findByEmail(email: Customer["email"]): Promise<Required<Customer> | null> {
-    //     const customer = CustomerRepository.data.find((customer) => customer.email === email)
-    //     return customer ?? null
-    // }
-
     public async findByEmail(email: Customer["email"]): Promise<Required<Customer> | null> {
         const customer = await db.query.customers.findFirst({
-            with: {
-                email: email,
-            },
+            where: eq(customers.email, email),
         })
         return customer ?? null
     }

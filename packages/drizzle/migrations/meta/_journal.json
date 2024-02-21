@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "sqlite",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1708404610761,
-      "tag": "0000_short_may_parker",
+      "when": 1708473115018,
+      "tag": "0000_narrow_korath",
       "breakpoints": true
     }
   ]

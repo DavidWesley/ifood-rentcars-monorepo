@@ -1,21 +1,21 @@
 {
   "name": "@repo/drizzle",
-  "main": "./main.ts",
-  "types": "./main.ts",
+  "main": "./db.ts",
+  "types": "./db.ts",
   "version": "0.0.0",
   "type": "module",
   "private": true,
   "scripts": {
-    "db:generate": "drizzle-kit generate:sqlite",
-    "db:push": "drizzle-kit push:sqlite",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.9",
-    "drizzle-kit": "^0.20.14"
+    "drizzle-kit": "^0.20.14",
+    "pg": "^8.11.3"
   },
   "dependencies": {
-    "better-sqlite3": "^9.4.1",
-    "drizzle-orm": "^0.29.3"
+    "drizzle-orm": "^0.29.3",
+    "postgres": "^3.4.3"
   }
 }
