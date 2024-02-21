@@ -1,16 +1,16 @@
-import { NextFunction, Request, Response } from "express";
-import { ZodType } from "zod";
+import { NextFunction, Request, Response } from "express"
+import { ZodType } from "zod"
 
-import { ValidationError } from "@/errors/ValidationError.ts";
-import { convertZodErrorIssuesToFieldsErrors } from "@/utils/convertZodErrorsToFieldsErrors.ts";
+import { ValidationError } from "@/errors/ValidationError.ts"
+import { convertZodErrorIssuesToFieldsErrors } from "@/utils/convertZodErrorsToFieldsErrors.ts"
 
-type RequestPropertiesNameType = "body" | "query" | "params";
-type RequestRoutePropertiesSchemasObject = Partial<Record<RequestPropertiesNameType, ZodType>>;
+type RequestPropertiesNameType = "body" | "query" | "params"
+type RequestRoutePropertiesSchemasObject = Partial<Record<RequestPropertiesNameType, ZodType>>
 
 export class ValidateRequestSchemaMiddleware {
     private static isControlledPropertyName(name: string): name is RequestPropertiesNameType {
-        const names: ReadonlyArray<RequestPropertiesNameType> = ["body", "params", "query"];
-        return names.some((value) => value === name);
+        const names: ReadonlyArray<RequestPropertiesNameType> = ["body", "params", "query"]
+        return names.some((value) => value === name)
     }
 
     public static handle(schemas: RequestRoutePropertiesSchemasObject) {
@@ -19,20 +19,21 @@ export class ValidateRequestSchemaMiddleware {
                 if (ValidateRequestSchemaMiddleware.isControlledPropertyName(propertyName)) {
                     const parsedObj = Reflect.has(schemas, propertyName)
                         ? await schemas[propertyName]?.safeParseAsync(request[propertyName])
-                        : undefined;
+                        : undefined
 
-                    if (parsedObj === undefined) continue;
+                    if (parsedObj === undefined) continue
 
                     if (parsedObj.success === false) {
-                        const fieldValidationErrors = convertZodErrorIssuesToFieldsErrors(parsedObj.error);
-                        const validationError = new ValidationError("Erro de validação", fieldValidationErrors);
+                        const fieldValidationErrors = convertZodErrorIssuesToFieldsErrors(parsedObj.error)
+                        const validationError = new ValidationError("Erro de validação", fieldValidationErrors)
 
+                        next(validationError)
                     } else {
-                        request[propertyName] = parsedObj.data;
+                        request[propertyName] = parsedObj.data
                     }
                 }
             }
-                next();
+            next()
         }
     }
 }
