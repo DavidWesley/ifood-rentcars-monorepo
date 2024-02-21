@@ -25,9 +25,9 @@ export class LogMiddleware {
             params: isEmpty(req.params) ? {} : req.params,
             query: isEmpty(req.query) ? {} : req.query,
             body: isEmpty(req.body) ? {} : req.body,
-        };
+        }
 
-        const requestInfo = LogMiddleware.JSON_FORMATTER(requestInfoObject);
+        const requestInfo = LogMiddleware.JSON_FORMATTER(requestInfoObject)
 
         switch (ENV.NODE_ENV) {
             case "production":
@@ -42,14 +42,6 @@ export class LogMiddleware {
                 break
             default:
                 break
-        }
-
-        if (req.headers.accept === 'application/json') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(requestInfo);
-        } else {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(`<pre>${requestInfo}</pre>`);
         }
 
         next()
