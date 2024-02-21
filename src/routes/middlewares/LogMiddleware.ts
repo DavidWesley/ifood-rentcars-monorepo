@@ -12,7 +12,7 @@ export class LogMiddleware {
         return JSON.stringify(value, null, 2)
     }
 
-    public static handle(req: Request, _: Response, next: NextFunction) {
+    public static handle(req: Request, res: Response, next: NextFunction) {
         const isEmpty = (object: object) => {
             if (!object) return true
             return Object.keys(object).length === 0
@@ -21,11 +21,13 @@ export class LogMiddleware {
         const now = new Date()
         const dateTimeString = LogMiddleware.DATE_FORMATTER.format(now)
 
-        const body = isEmpty(req.body) ? "" : `Body: ${LogMiddleware.JSON_FORMATTER(req.body)}`
-        const params = isEmpty(req.params) ? "" : `Params: ${LogMiddleware.JSON_FORMATTER(req.params)}`
-        const query = isEmpty(req.query) ? "" : `Query: ${LogMiddleware.JSON_FORMATTER(req.query)}`
+        const requestInfoObject = {
+            params: isEmpty(req.params) ? {} : req.params,
+            query: isEmpty(req.query) ? {} : req.query,
+            body: isEmpty(req.body) ? {} : req.body,
+        };
 
-        const requestInfo = [params, query, body].filter(Boolean).join("\n")
+        const requestInfo = LogMiddleware.JSON_FORMATTER(requestInfoObject);
 
         switch (ENV.NODE_ENV) {
             case "production":
@@ -40,6 +42,14 @@ export class LogMiddleware {
                 break
             default:
                 break
+        }
+
+        if (req.headers.accept === 'application/json') {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(requestInfo);
+        } else {
+            res.setHeader('Content-Type', 'text/html');
+            res.send(`<pre>${requestInfo}</pre>`);
         }
 
         next()
