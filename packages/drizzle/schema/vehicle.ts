@@ -1,5 +1,5 @@
 import { UUID } from "node:crypto"
-import { boolean, date, decimal, integer, numeric, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
+import { boolean, date, integer, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
 
 const VEHICLE_TYPE_ENUM = ["car", "motorcycle"] as const
 
