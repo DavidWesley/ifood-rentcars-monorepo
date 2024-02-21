@@ -27,24 +27,12 @@ export class ValidateRequestSchemaMiddleware {
                         const fieldValidationErrors = convertZodErrorIssuesToFieldsErrors(parsedObj.error);
                         const validationError = new ValidationError("Erro de validação", fieldValidationErrors);
 
-                        if (!response.headersSent) {
-                            if (request.headers['content-type'] === 'application/json') {
-                                response.status(validationError.statusCode).json(fieldValidationErrors);
-                            } else {
-                                response.status(validationError.statusCode).send(`<pre>${JSON.stringify(fieldValidationErrors, null, 2)}</pre>`);
-                            }
-                        } else {
-                            next(validationError);
-                        }
                     } else {
                         request[propertyName] = parsedObj.data;
                     }
                 }
             }
-
-            if (!response.headersSent) {
                 next();
-            }
         }
     }
 }
