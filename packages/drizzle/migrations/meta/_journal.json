@@ -8,6 +8,34 @@
       "when": 1708473115018,
       "tag": "0000_narrow_korath",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1708551043831,
+      "tag": "0001_flimsy_whirlwind",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1708551575582,
+      "tag": "0002_late_iron_fist",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1708551718592,
+      "tag": "0003_daily_stellaris",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1708551824116,
+      "tag": "0004_peaceful_pandemic",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,1 @@
+ALTER TABLE "vehicles" ALTER COLUMN "rental_rate" SET DATA TYPE integer;
