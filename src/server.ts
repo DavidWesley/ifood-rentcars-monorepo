@@ -1,5 +1,6 @@
 import http, { Server } from "node:http"
 
+import cors from "cors"
 import express, { Application } from "express"
 import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
@@ -28,6 +29,7 @@ const defaultRateLimiter = rateLimit({
     skip: (req) => ALLOW_LIST_IPS.some((ip) => ip === req.ip),
 })
 
+app.use(cors())
 app.use(defaultRateLimiter)
 app.use(express.json())
 app.use(helmet())
