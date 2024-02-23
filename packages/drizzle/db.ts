@@ -12,5 +12,5 @@ import * as schema from "./schema/index.ts"
 export const connection = postgres(ENV.DATABASE_URL, { max: 4, ssl: "require" })
 export const db = drizzle(connection, {
     schema,
-    logger: true,
+    logger: ENV.NODE_ENV === "development",
 })
