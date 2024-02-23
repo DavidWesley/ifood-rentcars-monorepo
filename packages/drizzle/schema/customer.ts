@@ -1,5 +1,7 @@
 import { UUID } from "node:crypto"
+import { relations } from "drizzle-orm"
 import { date, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
+import { rentals } from "./rental.ts"
 
 const LICENSES_TYPES_ENUM = ["A", "B"] as const
 
@@ -14,4 +16,6 @@ export const customers = pgTable("customers", {
     createdAt: date("created_at", { mode: "date" }).notNull().defaultNow(),
 })
 
-// export const customersRelations = relations(customers, ({ one, many }) => ({}))
+export const customersRelations = relations(customers, ({ many }) => ({
+    rentals: many(rentals),
+}))

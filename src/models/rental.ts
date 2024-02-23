@@ -6,7 +6,7 @@ import { Vehicle } from "@/models/vehicle.ts"
 export enum RentalStatus {
     InProgress = "inProgress",
     Completed = "completed",
-    Canceled = "canceled",
+    Canceled = "cancelled",
 }
 
 export interface RentalProps {

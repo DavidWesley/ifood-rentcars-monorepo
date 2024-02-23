@@ -1,23 +1,46 @@
-import { randomUUID } from "node:crypto"
+import { db } from "@repo/drizzle"
+import { rentals as rentalTableSchema } from "@repo/drizzle/schema"
+import { and, desc, eq } from "drizzle-orm"
 
 import { Customer } from "@/models/customer.ts"
 import { Rental, RentalStatus } from "@/models/rental.ts"
 
 class RentalRepository {
     protected static data: Required<Rental>[] = []
+    protected static convert(rental: typeof rentalTableSchema.$inferSelect) {
+        const data = {
+            id: rental.id,
+            customerId: rental.customerId,
+            vehicleId: rental.vehicleId,
+            endDate: rental.endDate,
+            startDate: rental.startDate,
+            returnDate: rental.returnDate,
+            status: rental.status as RentalStatus,
+            createdAt: rental.createdAt,
+        } satisfies Required<Rental>
+
+        return data
+    }
 
     public async list(): Promise<Required<Rental>[]> {
-        return Array.from(RentalRepository.data)
+        const rentals = await db.query.rentals.findMany()
+        return rentals.map(RentalRepository.convert)
     }
 
     public async findById(id: NonNullable<Rental["id"]>): Promise<Required<Rental> | null> {
-        const rental = RentalRepository.data.find((rental) => rental.id === id)
-        return rental ?? null
+        const rental = await db.query.rentals.findFirst({
+            where: eq(rentalTableSchema.id, id),
+        })
+
+        return rental ? RentalRepository.convert(rental) : null
     }
 
     public async findAllByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental>[]> {
-        const rentals = RentalRepository.data.filter((rental) => rental.customerId === customerId)
-        return rentals
+        const rentals = await db.query.rentals.findMany({
+            where: eq(rentalTableSchema.id, customerId),
+        })
+
+        return rentals.map(RentalRepository.convert)
     }
 
     public async updateOne(id: NonNullable<Rental["id"]>, props: Omit<Partial<Rental>, "id">): Promise<Required<Rental> | null> {
@@ -35,19 +58,47 @@ class RentalRepository {
     }
 
     public async create(props: Omit<Rental, "id">): Promise<Required<Rental>> {
-        const id = randomUUID()
-        const size = await RentalRepository.data.push({ id, ...props })
-        return RentalRepository.data[size - 1] as Required<Rental>
+        const insertedRentalIdsList = await db
+            .insert(rentalTableSchema)
+            .values({
+                ...props,
+                status: props.status as `${RentalStatus}`,
+            })
+            .returning({ id: rentalTableSchema.id })
+
+        return (await this.findById(insertedRentalIdsList[0]!.id))!
     }
 
     public async findLastFromCustomerId(customerId: NonNullable<Customer["id"]>): Promise<Required<Rental> | null> {
-        const rental = RentalRepository.data.findLast((rental) => rental.customerId === customerId)
-        return rental ?? null
+        // const [rental] = await db
+        //     .select()
+        //     .from(rentalTableSchema)
+        //     .where(eq(rentalTableSchema.customerId, customerId))
+        //     .orderBy(desc(rentalTableSchema.createdAt))
+        //     .limit(1)
+
+        const rental = await db.query.rentals.findFirst({
+            where: and(eq(rentalTableSchema.customerId, customerId)),
+            orderBy: [desc(rentalTableSchema.createdAt)],
+        })
+
+        return rental ? RentalRepository.convert(rental) : null
     }
 
     public async findInProgressByCustomerId(customerId: NonNullable<Rental["customerId"]>): Promise<Required<Rental> | null> {
-        const rental = RentalRepository.data.find((rental) => rental.customerId === customerId && rental.status === RentalStatus.InProgress)
-        return rental ?? null
+        // const [rental] = await db
+        //     .select()
+        //     .from(rentalTableSchema)
+        //     .where(and(eq(rentalTableSchema.customerId, customerId), eq(rentalTableSchema.status, RentalStatus.InProgress)))
+        //     .orderBy(desc(rentalTableSchema.createdAt))
+        //     .limit(1)
+
+        const rental = await db.query.rentals.findFirst({
+            where: and(eq(rentalTableSchema.customerId, customerId), eq(rentalTableSchema.status, RentalStatus.InProgress)),
+            orderBy: [desc(rentalTableSchema.createdAt)],
+        })
+
+        return rental ? RentalRepository.convert(rental) : null
     }
 }
 

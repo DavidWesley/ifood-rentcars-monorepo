@@ -36,6 +36,13 @@
       "when": 1708551824116,
       "tag": "0004_peaceful_pandemic",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1708650929914,
+      "tag": "0005_classy_franklin_richards",
+      "breakpoints": true
     }
   ]
 }
