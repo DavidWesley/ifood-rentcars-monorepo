@@ -4,11 +4,16 @@
   "globalDotEnv": [ ".env" ],
   "globalEnv": [ "NODE_ENV" ],
   "pipeline": {
+    "start": {
+      "dependsOn": [ "build", "db:generate", "db:migrate" ],
+      "cache": true,
+      "env": [ "NODE_ENV", "DATABASE_URL" ]
+    },
     "build": {
       "dependsOn": [ "^build" ],
       "cache": true,
       "outputs": [ ".next/**", "!.next/cache/**", "dist/**" ],
-      "env": [ "NODE_ENV", "DATABASE_URL" ]
+      "env": [ "NODE_ENV" ]
     },
     "dev": {
       "cache": false,
@@ -21,6 +26,14 @@
     },
     "format": {
       "cache": true
-    }
+    },
+    "db:generate": {
+      "cache": true
+    },
+    "db:migrate": {
+      "dependsOn": [ "db:generate" ],
+      "cache": true
+    },
+    "db:studio": { }
   }
 }
