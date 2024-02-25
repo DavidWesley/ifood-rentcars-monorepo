@@ -8,6 +8,13 @@ const serverEnvSchema = z.object({
     DATABASE_URL: z.string().url(),
 })
 
-const SERVER_ENV = serverEnvSchema.parse(env)
+let SERVER_ENV: z.output<typeof serverEnvSchema>
+
+try {
+    SERVER_ENV = serverEnvSchema.parse(env)
+} catch {
+    process.stderr.write("[ENV] Variáveis de ambiente do servidor pendentes")
+    process.exit(1)
+}
 
 export { SERVER_ENV, serverEnvSchema }
