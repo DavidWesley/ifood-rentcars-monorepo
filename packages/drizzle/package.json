@@ -5,12 +5,17 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "files": [
+    "db.ts",
+    "schema"
+  ],
   "scripts": {
     "db:generate": "drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
+    "@repo/tsconfig": "*",
     "drizzle-kit": "^0.20.14",
     "pg": "^8.11.3"
   },

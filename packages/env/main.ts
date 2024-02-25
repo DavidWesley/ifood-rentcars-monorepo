@@ -1,3 +1,5 @@
+import "./version.ts"
+
 import { SERVER_ENV } from "./schema/server.ts"
 
 const ENV = {

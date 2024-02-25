@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.json",
-    "include": ["."],
-    "exclude": ["dist", "build", "node_modules"]
-  }
+  "extends": [ "@repo/tsconfig/lib.json" ],
+  "include": [ "." ],
+  "exclude": [ "dist", "build", "node_modules" ]
+}

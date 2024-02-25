@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Lib",
+    "extends": [
+        "./base.json"
+    ],
+    "compilerOptions": {
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "noUncheckedIndexedAccess": true,
+        "moduleResolution": "Bundler",
+        "module": "ES2022",
+        "lib": [ "es2022", "dom", "dom.iterable" ],
+    },
+    "exclude": [ "node_modules" ]
+}
