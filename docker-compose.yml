@@ -1,0 +1,31 @@
+version: '3.7'
+
+volumes:
+  data:
+
+
+services:
+  database:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - data:/bitnami/postgresql
+
+  server:
+    depends_on:
+      - database
+    container_name: server
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile
+    environment:
+      - "DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_NAME}?search_path=public"
+      - "HOST=0.0.0.0"
+    restart: always
+    ports:
+      - 3001:${SERVER_PORT}
