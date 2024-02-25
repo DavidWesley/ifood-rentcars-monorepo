@@ -10,7 +10,8 @@
       "*.md",
       "**/*.json",
       "**/*config*",
-      "**/test"
+      "**/test",
+      "package-lock.json"
     ]
   },
   "organizeImports": {
