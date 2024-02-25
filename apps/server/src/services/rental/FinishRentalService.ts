@@ -31,7 +31,10 @@ class FinishRentalService {
             throw new RentalDateRangeError(rental.startDate, today)
         }
 
-        rental = (await rentalRepository.updateOne(rental.id, { status: RentalStatus.Completed, returnDate: today }))!
+        rental = (await rentalRepository.updateOne(rental.id, {
+            status: RentalStatus.Completed,
+            returnDate: today,
+        }))!
         vehicleRepository.updateOne(rental.vehicleId, { available: true })
 
         // TODO: No futuro, remover essa operação de pagamento de fatura dependente do aluguel

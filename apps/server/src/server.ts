@@ -6,7 +6,6 @@ import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
 
-import { InvalidRouteError } from "@/errors/InvalidRouteError.ts"
 import { customerRouter } from "@/routes/customerRoutes.ts"
 import { invoiceRouter } from "@/routes/invoiceRoutes.ts"
 import { rentalRouter } from "@/routes/rentalRoutes.ts"
@@ -48,7 +47,10 @@ app.use("/rentals", rentalRouter)
 app.use("/invoices", invoiceRouter)
 
 //// AFTER ALL MIDDLEWARES ////
-app.use((_, __, next) => next(new InvalidRouteError("Rota não encontrada")))
+// app.use((_, __, next) => {
+//     const error = new InvalidRouteError("Rota não encontrada")
+//     next(error)
+// })
 app.use(ErrorHandlerMiddleware.handle)
 
 export { server }

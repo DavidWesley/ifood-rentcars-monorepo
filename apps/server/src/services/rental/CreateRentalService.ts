@@ -43,7 +43,10 @@ class CreateRentalService {
             throw new RentalDateRangeError(startDate, endDate)
         }
 
-        await vehicleRepository.updateOne(vehicle.id, { available: false, popularity: vehicle.popularity + 1 })
+        await vehicleRepository.updateOne(vehicle.id, {
+            available: false,
+            popularity: vehicle.popularity + 1,
+        })
 
         const rental = await rentalRepository.create(new Rental(customer.id, vehicle.id, startDate, endDate, RentalStatus.InProgress))
 
