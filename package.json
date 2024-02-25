@@ -21,14 +21,14 @@
     "email": "contato.dwesley@outlook.com",
     "url": "https://github.com/DavidWesley"
   },
-  "homepage": "https://github.com/DavidWesley/ifood-rentcars-api#readme",
+  "homepage": "https://github.com/DavidWesley/ifood-rentcars-monorepo#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DavidWesley/ifood-rentcars-api.git",
+    "url": "git+https://github.com/DavidWesley/ifood-rentcars-monorepo.git",
     "directory": "/"
   },
   "bugs": {
-    "url": "https://github.com/DavidWesley/ifood-rentcars-api/issues"
+    "url": "https://github.com/DavidWesley/ifood-rentcars-monorepo/issues"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
