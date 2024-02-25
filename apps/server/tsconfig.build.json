@@ -2,20 +2,19 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022"],
+    "lib": [ "ES2022" ],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "allowJs": true,
     "checkJs": true,
     "removeComments": true,
-    "incremental": true,
     "baseUrl": ".",
-    "composite": true,
+    "composite": false,
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [ "./src/*" ]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules/*", "dist/*"]
+  "include": [ "src" ],
+  "exclude": [ "node_modules/*", "dist/*" ]
 }
