@@ -14,7 +14,9 @@ export const createVehicleBodySchema = z.object({
                 case "invalid_type":
                     return { message: "O tipo do dado informado é inválido." }
                 default:
-                    return { message: "O tipo de veículo informada ou é inválido ou ainda não é aceita pelo sistema." }
+                    return {
+                        message: "O tipo de veículo informada ou é inválido ou ainda não é aceita pelo sistema.",
+                    }
             }
         },
     }),
@@ -23,8 +25,12 @@ export const createVehicleBodySchema = z.object({
     manufacturingYear: z
         .number({ coerce: true })
         .int({ message: "O ano de fabricação deve ser um número inteiro." })
-        .min(2010, { message: "O ano de fabricação deve ser igual ou superior a 2010." })
-        .max(new Date().getFullYear() + 1, { message: "O ano de fabricação deve ser inferior ou igual ao ano atual + 1." }),
+        .min(2010, {
+            message: "O ano de fabricação deve ser igual ou superior a 2010.",
+        })
+        .max(new Date().getFullYear() + 1, {
+            message: "O ano de fabricação deve ser inferior ou igual ao ano atual + 1.",
+        }),
     color: z.enum(["white", "black", "gray", "red", "blue", "yellow"], {
         errorMap(issue, ctx) {
             switch (issue.code) {
@@ -33,7 +39,9 @@ export const createVehicleBodySchema = z.object({
                 case "invalid_type":
                     return { message: "O tipo do dado informado é inválido." }
                 default:
-                    return { message: "A cor informada ou é inválida ou ainda não é aceita pelo sistema." }
+                    return {
+                        message: "A cor informada ou é inválida ou ainda não é aceita pelo sistema.",
+                    }
             }
         },
     }),

@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "extends": [ "@repo/tsconfig/lib.json" ],
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "baseUrl": ".",
+        "composite": false,
+        "outDir": "dist",
+        "paths": {
+            "@/*": [ "./src/*" ]
+        }
+    },
+    "exclude": [ "node_modules", "dist" ],
+}

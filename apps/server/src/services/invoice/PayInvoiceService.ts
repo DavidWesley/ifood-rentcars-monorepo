@@ -13,7 +13,10 @@ class PayInvoiceService {
 
         const rental = await rentalRepository.findById(invoice.rentalId)
         const newAmount = await CalculateTotalAmount.execute(rental!)
-        invoice = await invoiceRepository.updateOne(invoiceId, { status: InvoiceStatus.Paid, totalCost: newAmount })
+        invoice = await invoiceRepository.updateOne(invoiceId, {
+            status: InvoiceStatus.Paid,
+            totalCost: newAmount,
+        })
 
         return invoice!
     }

@@ -11,7 +11,10 @@ const invoiceRouter = Router({
 
 invoiceRouter.post(
     "/list",
-    ValidateRequestSchemaMiddleware.handle({ body: listCustomerInvoicesBodySchema, query: listInvoicesQuerySchema }),
+    ValidateRequestSchemaMiddleware.handle({
+        body: listCustomerInvoicesBodySchema,
+        query: listInvoicesQuerySchema,
+    }),
     invoiceController.listCustomerInvoices
 )
 
