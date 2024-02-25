@@ -1,11 +1,17 @@
 {
   "name": "@repo/env",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Pacote que controla as variáveis de ambiente da aplicação",
-  "main": "main.ts",
-  "types": "main.ts",
+  "main": "./src/main.ts",
+  "types": "./src/main.ts",
   "type": "module",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup src --format 'esm' --target 'esnext' --keep-names --clean --minify-syntax"
+  },
   "dependencies": {
     "zod": "^3.22.4"
   }

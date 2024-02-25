@@ -6,11 +6,12 @@
   "type": "module",
   "private": true,
   "files": [
-    "db.ts",
-    "schema"
+    "dist/**"
   ],
   "scripts": {
+    "build": "tsup db.ts schema/ --format 'esm' --target 'esnext' --keep-names --clean",
     "db:generate": "drizzle-kit generate:pg",
+    "db:migrate": "tsx migrate.ts",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio"
   },
@@ -20,6 +21,7 @@
     "pg": "^8.11.3"
   },
   "dependencies": {
+    "@repo/env": "*",
     "drizzle-orm": "^0.29.3",
     "postgres": "^3.4.3"
   }
