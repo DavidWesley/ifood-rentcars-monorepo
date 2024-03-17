@@ -34,10 +34,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
+    "@commitlint/cli": "^19.2.0",
+    "@commitlint/config-conventional": "^19.1.0",
     "@repo/tsconfig": "workspace:*",
     "dotenv-cli": "^7.4.1",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.2",
-    "turbo": "^1.12.5"
+    "turbo": "^1.12.5",
+    "vitest": "^1.4.0"
   }
 }

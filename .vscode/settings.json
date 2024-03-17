@@ -1,12 +1,14 @@
 {
   "cSpell.enableFiletypes": [
     "!json",
+    "!yml",
     "ts"
   ],
   "cSpell.words": [
     "express",
     "rentcars",
-    "tsup"
+    "tsup",
+    "fastify"
   ],
   "editor.formatOnSave": true,
   "typescript.suggest.autoImports": true,

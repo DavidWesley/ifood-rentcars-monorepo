@@ -1,3 +1,6 @@
 {
-  "**.{js,ts}": [ "biome check --apply --no-errors-on-unmatched --diagnostic-level=warn --log-kind=compact" ]
+  "**.{js,ts}": [
+    "biome check --apply --no-errors-on-unmatched --diagnostic-level=warn  --log-kind=compact",
+    "npx vitest related --run"
+  ]
 }
