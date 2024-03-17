@@ -7,10 +7,12 @@
   ],
   "scripts": {
     "start": "dotenv -- turbo run start",
-    "build": "turbo build",
     "dev": "dotenv -- turbo dev",
+    "build": "turbo build",
+
     "lint": "turbo lint",
-    "format": "biome format --write --no-errors-on-unmatched --diagnostic-level=warn --log-kind=compact",
+    "format": "turbo format",
+
     "prepare": "husky install"
   },
   "engines": {

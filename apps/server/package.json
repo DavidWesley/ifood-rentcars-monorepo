@@ -13,8 +13,9 @@
     "start": "node --import tsx dist/main.js",
     "dev": "tsx watch src/main.ts",
     "build": "tsup --config tsup.config.ts src",
+
     "lint": "biome lint ./src --diagnostic-level=error",
-    "format": "biome format ./src --write --diagnostic-level=warn"
+    "format": "biome format ./src --write --no-errors-on-unmatched --diagnostic-level=warn --log-kind=compact"
   },
   "devDependencies": {
     "@repo/tsconfig": "^0.0.0",
