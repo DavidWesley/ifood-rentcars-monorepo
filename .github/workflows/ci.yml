@@ -1,0 +1,62 @@
+name: CI
+ 
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    types: [opened, synchronize]
+ 
+jobs:
+  lint:
+    name: Lint Project
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-and-cache
+
+      - name: Install
+        run: pnpm install --dev --prefer-offline --frozen-lockfile
+
+      - name: Run lint
+        run: pnpm run lint
+
+  # build:
+  #   name: Build and Test
+  #   timeout-minutes: 10
+  #   runs-on: ubuntu-latest
+  #   # To use Remote Caching, uncomment the next lines and follow the steps below.
+  #   env:
+  #      HUSKY: 0
+  #     #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  #     #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+ 
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 2
+ 
+  #     - uses: pnpm/action-setup@v3
+  #       with:
+  #         version: 8.15.4
+ 
+  #     - name: Setup Node.js environment
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 'lts'
+  #         node-version-file: 'package.json'
+  #         cache: 'pnpm'
+ 
+  #     - name: Install dependencies
+  #       run: pnpm install --prefer-offline --frozen-lockfile
+ 
+  #     - name: Build
+  #       run: pnpm build
+ 
+  #     - name: Test
+  #       run: pnpm run test:coverage
