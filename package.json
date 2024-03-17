@@ -10,11 +10,12 @@
     "build": "turbo build",
     "dev": "dotenv -- turbo dev",
     "lint": "turbo lint",
-    "format": "biome format --apply --no-errors-on-unmatched --diagnostic-level=warn --log-kind=compact",
+    "format": "biome format --write --no-errors-on-unmatched --diagnostic-level=warn --log-kind=compact",
     "prepare": "husky install"
   },
   "engines": {
-    "node": ">=20.9"
+    "node": ">=20.11.0",
+    "pnpm": ">=8.15.4"
   },
   "license": "MIT",
   "author": {
@@ -34,9 +35,9 @@
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
     "@repo/tsconfig": "workspace:*",
-    "dotenv-cli": "^7.3.0",
-    "husky": "^8.0.0",
-    "lint-staged": "^15.2.0",
-    "turbo": "^1.12.1"
+    "dotenv-cli": "^7.4.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.2",
+    "turbo": "^1.12.5"
   }
 }

@@ -9,7 +9,7 @@ import * as schema from "./schema/index.ts"
 // migrate(drizzle(migrationClient), { migrationsFolder: "./migrations" })
 
 // for query purposes
-export const connection = postgres(ENV.DATABASE_URL, { max: 4, ssl: ENV.NODE_ENV === "production" ? "require" : false })
+export const connection = postgres(ENV.DATABASE_URL, { max: 4, ssl: ENV.NODE_ENV === "production" ? "require" : true })
 export const db = drizzle(connection, {
     schema,
     logger: ENV.NODE_ENV === "development",

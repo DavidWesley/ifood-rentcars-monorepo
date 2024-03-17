@@ -16,13 +16,15 @@
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
-    "@repo/tsconfig": "*",
+    "@repo/tsconfig": "workspace:*",
     "drizzle-kit": "^0.20.14",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.1"
   },
   "dependencies": {
-    "@repo/env": "*",
-    "drizzle-orm": "^0.29.3",
+    "@repo/env": "workspace:*",
+    "drizzle-orm": "^0.29.5",
     "postgres": "^3.4.3"
   }
 }

@@ -1,4 +1,3 @@
-import { ENV } from "@repo/env"
 import { NextFunction, Request, Response } from "express"
 import { RequestPropertiesNameType } from "./ValidateRequestSchemaMiddleware.ts"
 
@@ -31,18 +30,16 @@ export class LogMiddleware {
         const requestInfoObject = requestInfoTupleArray.filter(([_, obj]) => !isEmpty(obj))
         const requestInfoMessage = LogMiddleware.JSON_FORMATTER(requestInfoObject)
 
-        switch (ENV.NODE_ENV) {
+        switch (process.env.NODE_ENV) {
             case "production":
                 console.log("[LOG] %s %s %s", dateTimeString, req.method, req.originalUrl)
-                break
-            case "development":
-                console.log("[LOG] %s %s %s", dateTimeString, req.method, req.url)
-                if (requestInfoObject.length > 0) console.log(requestInfoMessage)
-                console.groupEnd()
                 break
             case "test":
                 break
             default:
+                console.log("[LOG] %s %s %s", dateTimeString, req.method, req.url)
+                if (requestInfoObject.length > 0) console.log(requestInfoMessage)
+                console.groupEnd()
                 break
         }
 

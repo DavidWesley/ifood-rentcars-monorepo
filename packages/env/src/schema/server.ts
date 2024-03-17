@@ -1,6 +1,8 @@
 import { env } from "node:process"
 import { z } from "zod"
 
+import "dotenv/config"
+
 const serverEnvSchema = z.object({
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     PORT: z.coerce.number().positive().min(80).max(65_000).default(3333),
