@@ -13,6 +13,13 @@
     "lint": "turbo lint",
     "format": "turbo format",
 
+    "test:unit": "vitest run --project *unit*",
+    "test:unit:watch": "vitest watch --project *unit*",
+
+    "test:coverage:unit": "vitest run --coverage --project *unit*",
+    "test:coverage:integration": "vitest run --coverage --project *integration*",
+    "test:coverage:e2e": "vitest run --coverage --project *e2e*",
+
     "prepare": "husky install"
   },
   "engines": {
@@ -39,10 +46,12 @@
     "@commitlint/cli": "^19.2.0",
     "@commitlint/config-conventional": "^19.1.0",
     "@repo/tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^1.4.0",
     "dotenv-cli": "^7.4.1",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.2",
     "turbo": "^1.12.5",
+    "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.4.0"
   }
 }

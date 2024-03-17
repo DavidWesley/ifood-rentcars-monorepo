@@ -33,7 +33,6 @@
     "db:migrate": {
       "dependsOn": [ "db:generate" ],
       "cache": true
-    },
-    "db:studio": { }
+    }
   }
 }
