@@ -15,11 +15,23 @@ jobs:
       HUSKY: 0
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+  
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8.15.4
+  
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts'
+          node-version-file: 'package.json'
+          cache: 'pnpm'
 
-      - uses: ./.github/actions/setup-and-cache
-
-      - name: Install
+      - name: Install dev dependencies
         run: pnpm install --dev --prefer-offline --frozen-lockfile
 
       - name: Run lint
