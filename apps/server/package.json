@@ -35,7 +35,7 @@
     "@repo/env": "workspace:*",
     "@utils-fns/validators": "^10.0.0",
     "cors": "^2.8.5",
-    "drizzle-orm": "^0.29.5",
+    "drizzle-orm": "^0.31.2",
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
     "helmet": "^7.1.0",
