@@ -48,7 +48,7 @@
     "lint-staged": "^15.2.10",
     "turbo": "^1.13.4",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.1"
   },
   "pnpm": {
     "overrides": {
